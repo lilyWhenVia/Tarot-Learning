@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+
+# Vercel local/project metadata
+.vercel/
+
+# Build output
+dist/
+build/
+out/
+
+# Logs and local environment
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.env
+.env.*
+
+# Archives and downloaded source packages
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+
+# Duplicate/raw Rider-Waite-Smith download folder.
+# Keep assets/ tracked: data.js references assets/cards/... as stable local card image paths.
+rws-tarot-cards/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
