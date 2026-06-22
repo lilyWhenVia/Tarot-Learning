@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const vm = require("vm");
 
 const root = path.resolve(__dirname, "..");
 const dist = path.join(root, "dist");
@@ -11,6 +12,8 @@ const requiredFiles = [
   "app.js",
   "data.js",
   "data-extra.js",
+  "knowledge-base.js",
+  "insight-engine.js",
   "README.md"
 ];
 
@@ -66,6 +69,57 @@ function getHtmlReferences() {
     .filter((ref) => ref && !/^https?:\/\//i.test(ref));
 }
 
+function generateKnowledgeBaseCards() {
+  const context = {
+    window: {}
+  };
+  vm.createContext(context);
+  ["data.js", "data-extra.js", "knowledge-base.js"].forEach((file) => {
+    vm.runInContext(fs.readFileSync(path.join(root, file), "utf8"), context, { filename: file });
+  });
+  const cards = context.window.TAROT_KNOWLEDGE_BASE || [];
+  if (!cards.length) {
+    throw new Error("Knowledge base export failed: no cards generated.");
+  }
+  return cards;
+}
+
+function buildKnowledgeBaseJson() {
+  const cards = generateKnowledgeBaseCards();
+  fs.writeFileSync(
+    path.join(dist, "tarot-knowledge-base.json"),
+    JSON.stringify({ version: 1, cards }, null, 2),
+    "utf8"
+  );
+}
+
+function generateInsightEngineData() {
+  const context = {
+    window: {}
+  };
+  vm.createContext(context);
+  ["data.js", "data-extra.js", "knowledge-base.js", "insight-engine.js"].forEach((file) => {
+    vm.runInContext(fs.readFileSync(path.join(root, file), "utf8"), context, { filename: file });
+  });
+  const ragDb = context.window.TAROT_RAG_DB || [];
+  if (!ragDb.length) {
+    throw new Error("RAG export failed: no snippets generated.");
+  }
+  return {
+    ragDb,
+    sampleInsight: context.window.generateTarotInsight(context.window.TAROT_KNOWLEDGE_BASE[0])
+  };
+}
+
+function buildRagDbJson() {
+  const { ragDb } = generateInsightEngineData();
+  fs.writeFileSync(
+    path.join(dist, "tarot-rag-db.json"),
+    JSON.stringify({ version: 1, snippets: ragDb }, null, 2),
+    "utf8"
+  );
+}
+
 function main() {
   [...requiredFiles, ...requiredDirs].forEach(assertExists);
 
@@ -75,6 +129,8 @@ function main() {
   }
 
   if (checkOnly) {
+    generateKnowledgeBaseCards();
+    generateInsightEngineData();
     console.log("Build inputs verified.");
     return;
   }
@@ -83,6 +139,8 @@ function main() {
   fs.mkdirSync(dist, { recursive: true });
   requiredFiles.forEach(copyFile);
   requiredDirs.forEach(copyDir);
+  buildKnowledgeBaseJson();
+  buildRagDbJson();
   console.log(`Built static site into ${path.relative(root, dist)}`);
 }
 

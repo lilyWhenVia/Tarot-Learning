@@ -431,8 +431,10 @@ function DailyCardPanel({ card, onOpenDailyCard }) {
   if (!card) return null;
   const keywords = getDailyKeywords(card);
   const elements = getDailyElements(card);
+  const insight = getTarotInsight(card, { query: card.coreMeaning || card.name });
+  const actionScene = insight.lifeScenes[0] || "今天的现实情境";
   const question = card.dailyQuestion || `今天我可以从「${card.name}」这张牌中学习什么？`;
-  const memoryTip = card.memoryTip || card.memory || `记住「${card.name}」：${keywords.slice(0, 3).join("、") || "观察图像，理解牌义"}。`;
+  const memoryTip = card.memoryTip || card.deepInsight || card.memory || `记住「${card.name}」：${card.coreMeaning || keywords.slice(0, 3).join("、") || "观察图像，理解牌义"}。`;
 
   return h("section", { className: "daily-panel" },
     h("div", { className: "daily-panel-head" },
@@ -449,12 +451,17 @@ function DailyCardPanel({ card, onOpenDailyCard }) {
         h("small", null, card.english)
       ),
       h("div", { className: "daily-info-stack" },
+        h("p", null, h("strong", null, "核心含义："), card.coreMeaning || card.theme || card.upright),
         h("p", null, h("strong", null, "今日关键词："), keywords.length ? keywords.join("、") : "观察图像，理解牌义"),
         h("p", null, h("strong", null, "今日图像元素："), elements.length ? elements.join("、") : "暂无图像元素数据，可进入学习页查看基础牌义。"),
         h("p", null, h("strong", null, "今日思考问题："), question),
         h("p", null, h("strong", null, "一句话记忆："), memoryTip)
       )
-    )
+    ),
+    h("section", { className: "daily-ai-layer" },
+      h("p", null, h("strong", null, "行动建议："), `在「${actionScene}」里练习：${insight.summary}`)
+    ),
+    h(RagSnippetList, { snippets: insight.ragSnippets, title: "今日RAG补充" })
   );
 }
 
@@ -550,13 +557,14 @@ function ImageLearningModule({ card, selectedElementId, setSelectedElementId, pr
         ),
         h("span", { className: "suit-pill" }, card.suit)
       ),
-      h("p", { className: "theme" }, card.theme),
+      h("p", { className: "theme" }, card.coreMeaning || card.theme),
       h(StudyStatusActions, {
         card,
         progressRecord,
         onSetStatus: setCardStatus
       }),
       h("div", { className: "keyword-row" }, card.keywords.map((keyword) => h("span", { key: keyword }, keyword))),
+      h(StructuredReadingPanelV2, { card }),
       h(ElementStudyPanel, { card, element }),
       h("div", { className: "meaning-grid" },
         h("section", null,
@@ -570,9 +578,138 @@ function ImageLearningModule({ card, selectedElementId, setSelectedElementId, pr
       ),
       h("section", { className: "memory-line" },
         h("h3", null, "一句话记忆"),
-        h("p", null, card.memory)
+        h("p", null, card.deepInsight || card.memory || card.coreMeaning)
       )
     )
+  );
+}
+
+function StructuredReadingPanel({ card }) {
+  const elementLabels = getDailyElements(card);
+  const lifeScenes = Array.isArray(card.lifeScenes) ? card.lifeScenes : [];
+  const layers = card.learningLayers || {};
+
+  return h("section", { className: "structured-reading" },
+    h("p", { className: "eyebrow" }, "Structured Reading"),
+    h("h3", null, "结构化解读"),
+    h("div", { className: "structured-core" },
+      h("strong", null, "核心含义"),
+      h("p", null, card.coreMeaning || card.theme || card.upright)
+    ),
+    h("div", { className: "structured-grid" },
+      h("div", null,
+        h("strong", null, "正位"),
+        h("p", null, card.upright)
+      ),
+      h("div", null,
+        h("strong", null, "逆位"),
+        h("p", null, card.reversed)
+      )
+    ),
+    h("div", { className: "structured-insight" },
+      h("strong", null, "深度洞察"),
+      h("p", null, card.deepInsight || card.memory || card.coreMeaning)
+    ),
+    h("div", { className: "structured-chip-block" },
+      h("strong", null, "图像元素拆解"),
+      h("div", { className: "structured-chip-row" },
+        elementLabels.length
+          ? elementLabels.map((label) => h("span", { key: label }, label))
+          : h("small", null, "暂无图像元素数据")
+      )
+    ),
+    h("div", { className: "structured-chip-block" },
+      h("strong", null, "生活场景"),
+      h("div", { className: "structured-chip-row" },
+        lifeScenes.length
+          ? lifeScenes.map((scene) => h("span", { key: scene }, scene))
+          : h("small", null, "可结合当前问题情境理解")
+      )
+    ),
+    h("details", { className: "learning-layers" },
+      h("summary", null, "学习层级"),
+      ["level1", "level2", "level3", "level4"].map((level) => layers[level] && h("p", { key: level },
+        h("strong", null, `${level.replace("level", "L")}：`),
+        layers[level]
+      ))
+    )
+  );
+}
+
+function StructuredReadingPanelV2({ card }) {
+  const insight = getTarotInsight(card, { query: card.coreMeaning || card.name });
+  const elementLabels = getDailyElements(card);
+  const lifeScenes = insight.lifeScenes || [];
+  const layers = insight.learningLayers || {};
+
+  return h("section", { className: "structured-reading" },
+    h("p", { className: "eyebrow" }, "AI Insight Engine"),
+    h("h3", null, "AI分层解读"),
+    h("div", { className: "structured-core" },
+      h("strong", null, "基础解读"),
+      h("p", null, insight.summary)
+    ),
+    h("div", { className: "structured-grid" },
+      h("div", null,
+        h("strong", null, "正位"),
+        h("p", null, insight.upright)
+      ),
+      h("div", null,
+        h("strong", null, "逆位"),
+        h("p", null, insight.reversed)
+      )
+    ),
+    h("div", { className: "structured-insight" },
+      h("strong", null, "深度洞察"),
+      h("p", null, insight.deepInsight)
+    ),
+    h("div", { className: "structured-chip-block" },
+      h("strong", null, "图像元素拆解"),
+      h("div", { className: "structured-chip-row" },
+        elementLabels.length
+          ? elementLabels.map((label) => h("span", { key: label }, label))
+          : h("small", null, "暂无图像元素数据")
+      )
+    ),
+    h("div", { className: "structured-chip-block" },
+      h("strong", null, "应用场景"),
+      h("div", { className: "structured-chip-row" },
+        lifeScenes.length
+          ? lifeScenes.map((scene) => h("span", { key: scene }, scene))
+          : h("small", null, "可结合当前问题情境理解")
+      )
+    ),
+    h("details", { className: "learning-layers" },
+      h("summary", null, "学习层级"),
+      ["level1", "level2", "level3", "level4"].map((level) => layers[level] && h("p", { key: level },
+        h("strong", null, `${level.replace("level", "L")}：`),
+        layers[level]
+      ))
+    ),
+    h(RagSnippetList, { snippets: insight.ragSnippets, title: "RAG补充解释" }),
+    h(ImageGuidePanel, { imageGuide: insight.imageGuide })
+  );
+}
+
+function RagSnippetList({ snippets, title }) {
+  if (!snippets || !snippets.length) return null;
+  return h("section", { className: "rag-snippets" },
+    h("strong", null, title || "RAG补充"),
+    snippets.map((snippet) => h("p", { key: `${snippet.cardId}-${snippet.tag}` },
+      h("span", null, snippet.tag),
+      snippet.content
+    ))
+  );
+}
+
+function ImageGuidePanel({ imageGuide }) {
+  if (!imageGuide || !imageGuide.length) return null;
+  return h("section", { className: "image-guide-panel" },
+    h("strong", null, "图像理解增强"),
+    imageGuide.slice(0, 4).map((item) => h("p", { key: item.element },
+      h("span", null, item.element),
+      `${item.symbol} ${item.learningPrompt}`
+    ))
   );
 }
 
@@ -721,14 +858,14 @@ function SpreadResult({ spread, cards, onStudyCard }) {
         onStudyCard
       }))
     ),
-    cards.length > 1 && h(SpreadSummary, { positionedCards }),
+    cards.length > 1 && h(SpreadSummaryV2, { positionedCards }),
     h(SpreadReflectionQuestions, { questions: spread.questions })
   );
 }
 
 function SpreadCard({ position, card, onStudyCard }) {
   const keywords = getDailyKeywords(card).slice(0, 4);
-  const brief = card.upright || card.theme || card.memory || "观察这张牌的图像、关键词和位置，练习建立自己的理解。";
+  const brief = card.coreMeaning || card.upright || card.theme || card.memory || "观察这张牌的图像、关键词和位置，练习建立自己的理解。";
 
   return h("article", { className: "spread-card" },
     h("p", { className: "spread-position" }, position),
@@ -770,6 +907,26 @@ function SpreadSummary({ positionedCards }) {
   );
 }
 
+function SpreadSummaryV2({ positionedCards }) {
+  const spreadInsight = getSpreadInsight(positionedCards.map((item) => item.card));
+
+  return h("section", { className: "spread-summary ai-spread-summary" },
+    h("h3", null, "AI组合主题"),
+    spreadInsight.cardBreakdown.map((item) => h("p", { key: item.card },
+      h("strong", null, `${item.card}：`),
+      item.meaning
+    )),
+    h("h4", null, "牌与牌之间的关系"),
+    h("p", null, spreadInsight.relationship),
+    h("h4", null, "整体故事线"),
+    h("p", null, spreadInsight.narrative),
+    h("h4", null, "学习提示"),
+    h("p", null, spreadInsight.learningInsight),
+    h("h4", null, "冲突点 / 张力点"),
+    h("p", null, spreadInsight.contradictionPoints)
+  );
+}
+
 function SpreadReflectionQuestions({ questions }) {
   return h("section", { className: "spread-questions" },
     h("h3", null, "思考问题"),
@@ -780,6 +937,7 @@ function SpreadReflectionQuestions({ questions }) {
 function getCardStudyFocus(card) {
   const keywords = getDailyKeywords(card).slice(0, 2);
   if (keywords.length) return keywords.join("与");
+  if (card.coreMeaning) return card.coreMeaning;
   if (card.theme) return card.theme;
   return "这张牌的核心图像和情绪";
 }
@@ -970,6 +1128,7 @@ function generateQuizQuestions(cards) {
     [
       buildKeywordToCardQuestion,
       buildCardToKeywordsQuestion,
+      buildDeepInsightQuestion,
       buildElementMeaningQuestion
     ].forEach((builder) => {
       const question = builder(card, usableCards);
@@ -1012,7 +1171,7 @@ function buildKeywordToCardQuestion(card, cards) {
     clue: keywords,
     options,
     correctText: card.name,
-    explanation: `这些关键词对应的是「${card.name}」。${card.theme || card.upright || ""}`
+    explanation: `这些关键词对应的是「${card.name}」。${card.coreMeaning || card.theme || card.upright || ""}`
   });
 }
 
@@ -1033,7 +1192,30 @@ function buildCardToKeywordsQuestion(card, cards) {
     prompt: `「${card.name}」对应哪组关键词？`,
     options,
     correctText: correctKeywords,
-    explanation: `「${card.name}」的核心可以从这些关键词进入：${correctKeywords}。${card.memory || card.theme || ""}`
+    explanation: `「${card.name}」的核心可以从这些关键词进入：${correctKeywords}。${card.coreMeaning || card.deepInsight || card.memory || card.theme || ""}`
+  });
+}
+
+function buildDeepInsightQuestion(card, cards) {
+  const insight = getTarotInsight(card, { query: card.deepInsight || card.coreMeaning || card.name });
+  const correctInsight = insight.deepInsight;
+  if (!correctInsight) return null;
+
+  const distractors = cards
+    .filter((item) => item.id !== card.id)
+    .map((item) => getTarotInsight(item, { query: item.name }).deepInsight)
+    .filter(Boolean);
+  const options = makeQuizOptions(card.name, cards.filter((item) => item.id !== card.id).map((item) => item.name));
+  if (!options || distractors.length < 3) return null;
+
+  return withCorrectOption({
+    typeLabel: "看深度洞察猜牌",
+    cardId: card.id,
+    prompt: "这段深度洞察对应哪张牌？",
+    clue: correctInsight,
+    options,
+    correctText: card.name,
+    explanation: `这段洞察对应「${card.name}」：${insight.summary}`
   });
 }
 
@@ -1144,10 +1326,20 @@ function ElementStudyPanel({ card, element }) {
     );
   }
 
+  const guide = getEnhancedImageGuide(card).find((item) => item.element === (element.label || element.title));
+
   return h("section", { className: "symbol-box" },
     h("p", { className: "eyebrow" }, "图像元素解析"),
     h("h3", null, element.title || element.label),
     h("p", null, element.description),
+    h("p", { className: "element-core-link" },
+      h("strong", null, "关联核心含义："),
+      element.relatedCoreMeaning || card.coreMeaning || card.theme
+    ),
+    guide && h("p", { className: "element-core-link" },
+      h("strong", null, "AI图像提示："),
+      guide.learningPrompt
+    ),
     element.prompt && h(React.Fragment, null,
       h("h4", null, "学习提示："),
       h("blockquote", null, element.prompt)
@@ -1370,6 +1562,54 @@ function getDailyElements(card) {
     .map((element) => element.title || element.label)
     .filter(Boolean)
     .slice(0, 5);
+}
+
+function getTarotInsight(card, context = {}) {
+  if (window.generateTarotInsight) {
+    return window.generateTarotInsight(card, context);
+  }
+
+  return {
+    summary: card?.coreMeaning || card?.theme || card?.upright || "",
+    keywords: getDailyKeywords(card),
+    upright: card?.upright || "",
+    reversed: card?.reversed || "",
+    deepInsight: card?.deepInsight || card?.memory || "",
+    imageGuide: getEnhancedImageGuide(card),
+    lifeScenes: Array.isArray(card?.lifeScenes) ? card.lifeScenes : [],
+    learningLayers: card?.learningLayers || {},
+    ragSnippets: []
+  };
+}
+
+function getEnhancedImageGuide(card) {
+  if (window.enhanceImageMeaning) {
+    return window.enhanceImageMeaning(card?.imageElements || [], card);
+  }
+
+  return (card?.imageElements || []).map((element) => ({
+    element: element.label || element.title,
+    symbol: element.description || element.meaning || "",
+    learningPrompt: element.prompt || element.hint || "",
+    relatedCoreMeaning: card?.coreMeaning || card?.theme || ""
+  }));
+}
+
+function getSpreadInsight(cards) {
+  if (window.generateSpreadInsight) {
+    return window.generateSpreadInsight(cards);
+  }
+
+  return {
+    cardBreakdown: cards.map((card) => ({
+      card: card.name,
+      meaning: card.coreMeaning || card.theme || card.upright || ""
+    })),
+    relationship: "这组牌可以从关键词之间的补充与张力来理解。",
+    narrative: cards.map((card) => `${card.name}：${card.coreMeaning || card.theme || ""}`).join(" "),
+    learningInsight: "先看单张牌，再看牌与牌之间如何互相补充。",
+    contradictionPoints: "暂无明显冲突点。"
+  };
 }
 
 function h(type, props, ...children) {
