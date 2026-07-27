@@ -19,6 +19,15 @@
 ### 重要环境问题(务必知道)
 Workflow/Agent 子代理路径在本环境**不可用**：代理服务器(localhost:7001)把子代理请求路由到 `claude-opus-5` 时报 422(`role "system"` 不被接受)，秒失败、0 产出。因此 56 张小牌是**主循环直接手写**的，不能靠并行子代理批量生成。若换环境后子代理恢复，可用 workflow 加速后续的审核/复核。
 
+联网也被拦截(WebFetch 被网络策略挡、curl 到 Wikimedia 超时)，所以本环境无法下载新图片、无法核对在线来源，只能用已有素材和 web 搜索摘要。
+
+## 牌面图片(78 张真实 RWS 已渲染)
+
+- `assets/cards/*.jpg` 里有全部 78 张**标准 Rider-Waite-Smith 牌面**(公共领域，来自 Wikimedia)，500px 宽，`assets/cards/rws-manifest.json` 记录了每张的在线来源。
+- `scripts/map-card-images.js` → 生成 `card-images.js`(全局 `window.TAROT_CARD_IMAGES`，把卡牌 id 映射到图片路径)。`npm run map-images`，已并入 test/build。
+- `app.js` 的 `CardArtwork` 现在渲染真实 `<img>` 牌面(无图才回退旧的 CSS 图形)；主学习视图和牌阵练习视图都会显示真实牌面。
+- **想升级到更高清**：在能访问 Wikimedia 的机器上跑 `node scripts/download-hires-rws.js 1000`(参数是像素宽度)，它按 manifest 把每张覆盖成更高分辨率版本，然后 `git add assets/cards` 提交即可。本环境因网络被拦截跑不了。
+
 ## 核心痛点（所有内容设计的出发点）
 
 用户能理解单张牌的意象，但**不知道怎么把牌意结合到实际问题上应用**（牌意 → 结合真实问题 → 落地建议）。所以每张牌内容的重心是：
