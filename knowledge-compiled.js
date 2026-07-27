@@ -7,7 +7,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "VII",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "用意志驾驭相反的力量，朝目标推进。",
@@ -129,7 +129,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "XIII",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "让该结束的彻底结束，新生才有空间。",
@@ -251,7 +251,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "XV",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "看清那条其实可以解开的锁链。",
@@ -373,7 +373,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "IV",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "用结构和边界让力量能落地。",
@@ -495,7 +495,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "III",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "让事物在被滋养中自然生长。",
@@ -617,7 +617,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "0",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "带着信任跨入未知的第一步。",
@@ -747,7 +747,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "XII",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "主动暂停，倒过来看，反而看清。",
@@ -869,7 +869,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "IX",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "退到安静处，用自己的灯照亮真理。",
@@ -991,7 +991,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "V",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "向传统与体系学习，找到共同认可的路。",
@@ -1113,7 +1113,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "II",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "在安静中听见还没说出口的答案。",
@@ -1235,7 +1235,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "XX",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "听见召唤，从旧的自己中重生。",
@@ -1357,7 +1357,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "XI",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "面对真相，承担因果，让天平回到平衡。",
@@ -1479,7 +1479,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "VI",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "基于价值观做出的、忠于自己的选择。",
@@ -1601,7 +1601,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "I",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "把意图变成现实的那股专注力。",
@@ -1723,7 +1723,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "XVIII",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "在看不清的夜里，穿过恐惧与幻象，靠直觉摸黑前行。",
@@ -1853,7 +1853,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "XVII",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "风暴过后，重新获得平静的希望。",
@@ -1975,7 +1975,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "VIII",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "用温柔而非蛮力去驯服内在的野性。",
@@ -2097,7 +2097,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "XIX",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "拨云见日的坦然喜悦与被照亮的活力。",
@@ -2227,7 +2227,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "XIV",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "把对立的元素调和成能流动的平衡。",
@@ -2349,7 +2349,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "XVI",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "虚假的结构被击穿，真相突然显露。",
@@ -2471,7 +2471,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "X",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "局势在转动，顺势调整而非硬抗。",
@@ -2593,7 +2593,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "XXI",
     "arcana": "major",
     "suit": null,
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "一个大周期的圆满完成，与身心合一的归属感。",
@@ -2715,7 +2715,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "一",
     "arcana": "minor",
     "suit": "cups",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "情感之泉初次涌出的爱与开放。",
@@ -2837,7 +2837,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "二",
     "arcana": "minor",
     "suit": "cups",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "两颗心相互敞开的对等结合。",
@@ -2951,7 +2951,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "三",
     "arcana": "minor",
     "suit": "cups",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "三人举杯共庆的友谊与欢聚。",
@@ -3065,7 +3065,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "四",
     "arcana": "minor",
     "suit": "cups",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "对眼前的一切感到厌倦、心不在焉。",
@@ -3179,7 +3179,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "五",
     "arcana": "minor",
     "suit": "cups",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "盯着打翻的杯，忘了身后还站着的。",
@@ -3301,7 +3301,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "六",
     "arcana": "minor",
     "suit": "cups",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "装满花的杯递出——纯真、怀旧与善意。",
@@ -3415,7 +3415,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "七",
     "arcana": "minor",
     "suit": "cups",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "面对云中七只诱人的杯，看不清哪个是真的。",
@@ -3529,7 +3529,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "八",
     "arcana": "minor",
     "suit": "cups",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "转身离开够用的一切，去寻找更深的意义。",
@@ -3643,7 +3643,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "九",
     "arcana": "minor",
     "suit": "cups",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "心愿达成后满足地抱臂而坐。",
@@ -3757,7 +3757,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "十",
     "arcana": "minor",
     "suit": "cups",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "彩虹下全家张开双臂的圆满幸福。",
@@ -3879,7 +3879,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "国王",
     "arcana": "minor",
     "suit": "cups",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "在情绪的风浪中稳坐不倒的成熟掌控。",
@@ -4001,7 +4001,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "骑士",
     "arcana": "minor",
     "suit": "cups",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "捧着圣杯缓步而来的浪漫追求者。",
@@ -4123,7 +4123,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "侍从",
     "arcana": "minor",
     "suit": "cups",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "从杯里探出一条鱼——天真而奇妙的情感萌芽。",
@@ -4237,7 +4237,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "皇后",
     "arcana": "minor",
     "suit": "cups",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "深情共情、直觉深沉的情感女王。",
@@ -4359,7 +4359,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "一",
     "arcana": "minor",
     "suit": "pentacles",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "一颗落地生根的丰盛种子。",
@@ -4473,7 +4473,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "二",
     "arcana": "minor",
     "suit": "pentacles",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "在起伏中灵活地保持多方平衡。",
@@ -4587,7 +4587,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "三",
     "arcana": "minor",
     "suit": "pentacles",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "各展所长、协作把事情做好。",
@@ -4701,7 +4701,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "四",
     "arcana": "minor",
     "suit": "pentacles",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "紧紧抱住拥有的，不敢松手。",
@@ -4823,7 +4823,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "五",
     "arcana": "minor",
     "suit": "pentacles",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "寒夜中匮乏无依，却没看见近旁的暖光。",
@@ -4937,7 +4937,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "六",
     "arcana": "minor",
     "suit": "pentacles",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "在给予与接受之间流动的慷慨与公平。",
@@ -5051,7 +5051,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "七",
     "arcana": "minor",
     "suit": "pentacles",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "停下来，评估长期投入的成果。",
@@ -5165,7 +5165,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "八",
     "arcana": "minor",
     "suit": "pentacles",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "埋头专注，把一件事打磨到精。",
@@ -5279,7 +5279,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "九",
     "arcana": "minor",
     "suit": "pentacles",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "独立自足，从容享受亲手挣来的丰盛。",
@@ -5393,7 +5393,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "十",
     "arcana": "minor",
     "suit": "pentacles",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "三代同堂的长久富足与传承。",
@@ -5515,7 +5515,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "国王",
     "arcana": "minor",
     "suit": "pentacles",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "白手起家、稳坐丰盛之巅的务实君王。",
@@ -5637,7 +5637,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "骑士",
     "arcana": "minor",
     "suit": "pentacles",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "稳扎稳打、有始有终的务实行动者。",
@@ -5751,7 +5751,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "侍从",
     "arcana": "minor",
     "suit": "pentacles",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "专注端详一枚金币的务实学徒。",
@@ -5865,7 +5865,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "皇后",
     "arcana": "minor",
     "suit": "pentacles",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "温暖务实、把生活经营得丰盛的持家者。",
@@ -5979,7 +5979,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "一",
     "arcana": "minor",
     "suit": "swords",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "一道劈开迷雾的清明与真相。",
@@ -6093,7 +6093,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "二",
     "arcana": "minor",
     "suit": "swords",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "蒙着眼、双剑交叉，逃避必须做的决定。",
@@ -6207,7 +6207,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "三",
     "arcana": "minor",
     "suit": "swords",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "被真相刺穿的心痛与清醒的悲伤。",
@@ -6321,7 +6321,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "四",
     "arcana": "minor",
     "suit": "swords",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "暂停下来，让身心在静默中休养。",
@@ -6443,7 +6443,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "五",
     "arcana": "minor",
     "suit": "swords",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "赢了争斗，却输了关系的空洞胜利。",
@@ -6557,7 +6557,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "六",
     "arcana": "minor",
     "suit": "swords",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "载着伤，驶向更平静的水域。",
@@ -6679,7 +6679,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "七",
     "arcana": "minor",
     "suit": "swords",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "偷偷抱走五把剑的算计与隐瞒。",
@@ -6801,7 +6801,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "八",
     "arcana": "minor",
     "suit": "swords",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "被自己的念头捆住，其实绳结很松。",
@@ -6923,7 +6923,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "九",
     "arcana": "minor",
     "suit": "swords",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "深夜惊醒、被焦虑与恐惧吞没的心。",
@@ -7037,7 +7037,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "十",
     "arcana": "minor",
     "suit": "swords",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "跌到谷底，却也意味着最坏已经过去。",
@@ -7159,7 +7159,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "国王",
     "arcana": "minor",
     "suit": "swords",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "理性权威、公正裁断的思想君王。",
@@ -7281,7 +7281,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "骑士",
     "arcana": "minor",
     "suit": "swords",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "举剑疾驰、一往无前的思想冲锋。",
@@ -7395,7 +7395,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "侍从",
     "arcana": "minor",
     "suit": "swords",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "好奇机敏、追问真相的思想学徒。",
@@ -7509,7 +7509,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "皇后",
     "arcana": "minor",
     "suit": "swords",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "历经沧桑后清醒、独立、直言的智者。",
@@ -7631,7 +7631,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "一",
     "arcana": "minor",
     "suit": "wands",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "一股新点燃的行动冲动与创造火花。",
@@ -7745,7 +7745,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "二",
     "arcana": "minor",
     "suit": "wands",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "站在成就的门槛上，规划更大的世界。",
@@ -7859,7 +7859,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "三",
     "arcana": "minor",
     "suit": "wands",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "已经出发，站在高处等待成果归来。",
@@ -7973,7 +7973,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "四",
     "arcana": "minor",
     "suit": "wands",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "阶段性成就带来的稳定、庆祝与归属。",
@@ -8095,7 +8095,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "五",
     "arcana": "minor",
     "suit": "wands",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "各执一杖的竞争、摩擦与混战。",
@@ -8209,7 +8209,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "六",
     "arcana": "minor",
     "suit": "wands",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "凯旋而归，得到公开的认可与胜利。",
@@ -8331,7 +8331,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "七",
     "arcana": "minor",
     "suit": "wands",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "站在高处，捍卫你已经赢得的位置。",
@@ -8453,7 +8453,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "八",
     "arcana": "minor",
     "suit": "wands",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "八根权杖破空飞行——快速的进展与消息。",
@@ -8567,7 +8567,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "九",
     "arcana": "minor",
     "suit": "wands",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "遍体鳞伤，却仍咬牙守住最后一道防线。",
@@ -8681,7 +8681,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "十",
     "arcana": "minor",
     "suit": "wands",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "扛起所有担子，负重前行到快压垮的临界。",
@@ -8795,7 +8795,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "国王",
     "arcana": "minor",
     "suit": "wands",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "有远见、能点燃他人的天生领袖。",
@@ -8917,7 +8917,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "骑士",
     "arcana": "minor",
     "suit": "wands",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "热血冲锋、说走就走的行动派。",
@@ -9039,7 +9039,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "侍从",
     "arcana": "minor",
     "suit": "wands",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "对新事物两眼发光的好奇初学者。",
@@ -9153,7 +9153,7 @@ window.TAROT_KNOWLEDGE_CARDS = {
     "number": "皇后",
     "arcana": "minor",
     "suit": "wands",
-    "status": "draft",
+    "status": "approved",
     "reviewNotes": "",
     "coreEnergy": {
       "oneLine": "温暖自信、光芒四射的火之女王。",
@@ -9272,553 +9272,553 @@ window.TAROT_KNOWLEDGE_CARDS = {
 window.TAROT_KNOWLEDGE_META = {
   "version": 1,
   "total": 78,
-  "approved": 0,
-  "draft": 78,
+  "approved": 78,
+  "draft": 0,
   "cards": [
     {
       "id": "chariot",
       "name": "战车",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/chariot.json"
     },
     {
       "id": "death",
       "name": "死神",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/death.json"
     },
     {
       "id": "devil",
       "name": "恶魔",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/devil.json"
     },
     {
       "id": "emperor",
       "name": "皇帝",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/emperor.json"
     },
     {
       "id": "empress",
       "name": "皇后",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/empress.json"
     },
     {
       "id": "fool",
       "name": "愚人",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/fool.json"
     },
     {
       "id": "hanged-man",
       "name": "倒吊人",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/hanged-man.json"
     },
     {
       "id": "hermit",
       "name": "隐士",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/hermit.json"
     },
     {
       "id": "hierophant",
       "name": "教皇",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/hierophant.json"
     },
     {
       "id": "high-priestess",
       "name": "女祭司",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/high-priestess.json"
     },
     {
       "id": "judgement",
       "name": "审判",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/judgement.json"
     },
     {
       "id": "justice",
       "name": "正义",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/justice.json"
     },
     {
       "id": "lovers",
       "name": "恋人",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/lovers.json"
     },
     {
       "id": "magician",
       "name": "魔术师",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/magician.json"
     },
     {
       "id": "moon",
       "name": "月亮",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/moon.json"
     },
     {
       "id": "star",
       "name": "星星",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/star.json"
     },
     {
       "id": "strength",
       "name": "力量",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/strength.json"
     },
     {
       "id": "sun",
       "name": "太阳",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/sun.json"
     },
     {
       "id": "temperance",
       "name": "节制",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/temperance.json"
     },
     {
       "id": "tower",
       "name": "高塔",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/tower.json"
     },
     {
       "id": "wheel-of-fortune",
       "name": "命运之轮",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/wheel-of-fortune.json"
     },
     {
       "id": "world",
       "name": "世界",
       "arcana": "major",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/major/world.json"
     },
     {
       "id": "cups-01",
       "name": "圣杯一",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/cups-01.json"
     },
     {
       "id": "cups-02",
       "name": "圣杯二",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/cups-02.json"
     },
     {
       "id": "cups-03",
       "name": "圣杯三",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/cups-03.json"
     },
     {
       "id": "cups-04",
       "name": "圣杯四",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/cups-04.json"
     },
     {
       "id": "cups-05",
       "name": "圣杯五",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/cups-05.json"
     },
     {
       "id": "cups-06",
       "name": "圣杯六",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/cups-06.json"
     },
     {
       "id": "cups-07",
       "name": "圣杯七",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/cups-07.json"
     },
     {
       "id": "cups-08",
       "name": "圣杯八",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/cups-08.json"
     },
     {
       "id": "cups-09",
       "name": "圣杯九",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/cups-09.json"
     },
     {
       "id": "cups-10",
       "name": "圣杯十",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/cups-10.json"
     },
     {
       "id": "cups-king",
       "name": "圣杯国王",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/cups-king.json"
     },
     {
       "id": "cups-knight",
       "name": "圣杯骑士",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/cups-knight.json"
     },
     {
       "id": "cups-page",
       "name": "圣杯侍从",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/cups-page.json"
     },
     {
       "id": "cups-queen",
       "name": "圣杯皇后",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/cups-queen.json"
     },
     {
       "id": "pentacles-01",
       "name": "星币一",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/pentacles-01.json"
     },
     {
       "id": "pentacles-02",
       "name": "星币二",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/pentacles-02.json"
     },
     {
       "id": "pentacles-03",
       "name": "星币三",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/pentacles-03.json"
     },
     {
       "id": "pentacles-04",
       "name": "星币四",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/pentacles-04.json"
     },
     {
       "id": "pentacles-05",
       "name": "星币五",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/pentacles-05.json"
     },
     {
       "id": "pentacles-06",
       "name": "星币六",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/pentacles-06.json"
     },
     {
       "id": "pentacles-07",
       "name": "星币七",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/pentacles-07.json"
     },
     {
       "id": "pentacles-08",
       "name": "星币八",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/pentacles-08.json"
     },
     {
       "id": "pentacles-09",
       "name": "星币九",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/pentacles-09.json"
     },
     {
       "id": "pentacles-10",
       "name": "星币十",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/pentacles-10.json"
     },
     {
       "id": "pentacles-king",
       "name": "星币国王",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/pentacles-king.json"
     },
     {
       "id": "pentacles-knight",
       "name": "星币骑士",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/pentacles-knight.json"
     },
     {
       "id": "pentacles-page",
       "name": "星币侍从",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/pentacles-page.json"
     },
     {
       "id": "pentacles-queen",
       "name": "星币皇后",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/pentacles-queen.json"
     },
     {
       "id": "swords-01",
       "name": "宝剑一",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/swords-01.json"
     },
     {
       "id": "swords-02",
       "name": "宝剑二",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/swords-02.json"
     },
     {
       "id": "swords-03",
       "name": "宝剑三",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/swords-03.json"
     },
     {
       "id": "swords-04",
       "name": "宝剑四",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/swords-04.json"
     },
     {
       "id": "swords-05",
       "name": "宝剑五",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/swords-05.json"
     },
     {
       "id": "swords-06",
       "name": "宝剑六",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/swords-06.json"
     },
     {
       "id": "swords-07",
       "name": "宝剑七",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/swords-07.json"
     },
     {
       "id": "swords-08",
       "name": "宝剑八",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/swords-08.json"
     },
     {
       "id": "swords-09",
       "name": "宝剑九",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/swords-09.json"
     },
     {
       "id": "swords-10",
       "name": "宝剑十",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/swords-10.json"
     },
     {
       "id": "swords-king",
       "name": "宝剑国王",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/swords-king.json"
     },
     {
       "id": "swords-knight",
       "name": "宝剑骑士",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/swords-knight.json"
     },
     {
       "id": "swords-page",
       "name": "宝剑侍从",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/swords-page.json"
     },
     {
       "id": "swords-queen",
       "name": "宝剑皇后",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/swords-queen.json"
     },
     {
       "id": "wands-01",
       "name": "权杖一",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/wands-01.json"
     },
     {
       "id": "wands-02",
       "name": "权杖二",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/wands-02.json"
     },
     {
       "id": "wands-03",
       "name": "权杖三",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/wands-03.json"
     },
     {
       "id": "wands-04",
       "name": "权杖四",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/wands-04.json"
     },
     {
       "id": "wands-05",
       "name": "权杖五",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/wands-05.json"
     },
     {
       "id": "wands-06",
       "name": "权杖六",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/wands-06.json"
     },
     {
       "id": "wands-07",
       "name": "权杖七",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/wands-07.json"
     },
     {
       "id": "wands-08",
       "name": "权杖八",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/wands-08.json"
     },
     {
       "id": "wands-09",
       "name": "权杖九",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/wands-09.json"
     },
     {
       "id": "wands-10",
       "name": "权杖十",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/wands-10.json"
     },
     {
       "id": "wands-king",
       "name": "权杖国王",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/wands-king.json"
     },
     {
       "id": "wands-knight",
       "name": "权杖骑士",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/wands-knight.json"
     },
     {
       "id": "wands-page",
       "name": "权杖侍从",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/wands-page.json"
     },
     {
       "id": "wands-queen",
       "name": "权杖皇后",
       "arcana": "minor",
-      "status": "draft",
+      "status": "approved",
       "file": "knowledge/minor/wands-queen.json"
     }
   ],
