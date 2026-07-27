@@ -4,8 +4,9 @@
   "private": true,
   "description": "A static Tarot image study tool.",
   "scripts": {
-    "test": "node --check app.js && node --check data.js && node --check data-extra.js && node --check knowledge-base.js && node --check insight-engine.js && node scripts/build-static.js --check-only",
-    "build": "node scripts/build-static.js"
+    "compile-knowledge": "node scripts/compile-knowledge.js",
+    "test": "node --check app.js && node --check data.js && node --check data-extra.js && node --check knowledge-base.js && node --check insight-engine.js && node --check translation-gym.js && node --check knowledge-compiled.js && node scripts/compile-knowledge.js && node scripts/build-static.js --check-only",
+    "build": "node scripts/compile-knowledge.js && node scripts/build-static.js"
   },
   "devDependencies": {}
 }

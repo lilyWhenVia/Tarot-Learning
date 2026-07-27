@@ -13,7 +13,9 @@ const requiredFiles = [
   "data.js",
   "data-extra.js",
   "knowledge-base.js",
+  "knowledge-compiled.js",
   "insight-engine.js",
+  "translation-gym.js",
   "README.md"
 ];
 
