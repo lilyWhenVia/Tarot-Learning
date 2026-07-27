@@ -2538,3 +2538,153 @@ h2, h3 {
 /* 平滑滚动与选中色 */
 html { scroll-behavior: smooth; }
 ::selection { background: rgba(198, 154, 76, 0.32); }
+
+/* ============================================================
+   设计精修层 2 (Design Refinement · Gilded Parchment) — 2026-07-27
+   依据 frontend-design 原则:氛围质感 > 平涂色、编排式载入动画、
+   装饰细节、克制而精准。纯追加,可整段删除回退。
+   ============================================================ */
+
+/* —— 羊皮纸纹理氛围:极淡的噪点 + 双重暖光,避免平涂 —— */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.22'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+/* —— 页眉:古籍装饰 · 双线烫金 + 花饰 —— */
+.app-header h1 {
+  position: relative;
+  display: inline-block;
+  padding: 0 1.6rem;
+}
+.app-header h1::before,
+.app-header h1::after {
+  content: "❦";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-45%);
+  font-size: 0.82em;
+  color: var(--gold);
+  opacity: 0.75;
+}
+.app-header h1::before { left: -0.2rem; }
+.app-header h1::after { right: -0.2rem; }
+
+/* eyebrow 小字加一条金色引导线 */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+.eyebrow::before {
+  content: "";
+  width: 1.4rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold), transparent);
+}
+
+/* —— 牌面:四角烫金花饰,像古董牌框 —— */
+.tarot-card { position: relative; }
+.tarot-card::before,
+.tarot-card::after {
+  content: "";
+  position: absolute;
+  width: 1.5rem;
+  height: 1.5rem;
+  z-index: 4;
+  border: 2px solid var(--gold-bright);
+  opacity: 0.85;
+  pointer-events: none;
+}
+.tarot-card::before {
+  top: 0.35rem; left: 0.35rem;
+  border-right: 0; border-bottom: 0;
+  border-top-left-radius: 6px;
+}
+.tarot-card::after {
+  bottom: 0.35rem; right: 0.35rem;
+  border-left: 0; border-top: 0;
+  border-bottom-right-radius: 6px;
+}
+
+/* —— 区块标题(结构化解读/知识库 h3):居中花饰分隔 —— */
+.knowledge-panel h3 {
+  position: relative;
+}
+
+/* —— 载入编排:进场时错落淡入上浮(一次性,高级感来自这里) —— */
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.app-header { animation: riseIn 620ms ease both; }
+.left-panel { animation: riseIn 720ms ease 80ms both; }
+.right-panel { animation: riseIn 760ms ease 160ms both; }
+.card-stage .tarot-card { animation: riseIn 820ms cubic-bezier(.2,.7,.2,1) 220ms both; }
+.meaning-panel > * { animation: riseIn 640ms ease both; }
+.meaning-panel > *:nth-child(1) { animation-delay: 240ms; }
+.meaning-panel > *:nth-child(2) { animation-delay: 300ms; }
+.meaning-panel > *:nth-child(3) { animation-delay: 360ms; }
+.meaning-panel > *:nth-child(4) { animation-delay: 420ms; }
+.meaning-panel > *:nth-child(n+5) { animation-delay: 480ms; }
+
+/* 牌列表/导航卡进场轻微错落 */
+.card-grid .card-tile { animation: riseIn 500ms ease both; }
+.card-grid .card-tile:nth-child(2n) { animation-delay: 40ms; }
+.card-grid .card-tile:nth-child(3n) { animation-delay: 80ms; }
+
+/* 尊重减少动效偏好 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+/* —— 焦点可达性:烫金聚焦环(替代难看的默认蓝框) —— */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* —— 滚动条:暖色细条,呼应主题 —— */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(166, 124, 46, 0.5) transparent;
+}
+*::-webkit-scrollbar { width: 9px; height: 9px; }
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--gold), var(--gold-deep));
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-track { background: transparent; }
+
+/* —— 正逆位标签(kp-tag)更精致 —— */
+.kp-tag.up { background: linear-gradient(135deg, rgba(126,160,90,0.28), rgba(154,194,106,0.2)); }
+.kp-tag.rev { background: linear-gradient(135deg, rgba(196,106,62,0.26), rgba(214,140,90,0.18)); }
+
+/* —— 结构化解读区块的左金边统一 —— */
+.structured-reading h3,
+.review-sources h4 {
+  border-left: 3px solid var(--gold-bright);
+  padding-left: 0.55rem;
+  color: var(--gold-deep);
+}
+
+/* —— 每日一牌:顶部一道极细烫金流光 —— */
+.daily-panel { position: relative; overflow: hidden; }
+.daily-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-bright), transparent);
+}
