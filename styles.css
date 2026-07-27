@@ -1836,6 +1836,25 @@ blockquote {
   margin-top: 0.5rem;
 }
 
+.review-bulk {
+  display: flex;
+  gap: 0.6rem;
+  margin: 0.7rem 0 0.2rem;
+}
+
+.review-actions {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+
+.review-actions .primary-btn,
+.review-actions .soft-btn {
+  padding: 0.5rem 1.1rem;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
 @media (max-width: 1050px) {
   .app-layout {
     grid-template-columns: minmax(13rem, 1fr) 3fr;

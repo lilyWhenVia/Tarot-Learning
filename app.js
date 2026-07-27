@@ -780,11 +780,48 @@ function KnowledgePanel({ knowledge }) {
 }
 
 function ReviewMode({ cards, onBackToLearn }) {
-  const meta = getKnowledgeMeta();
   const knowledgeCards = window.TAROT_KNOWLEDGE_CARDS || {};
   const ids = Object.keys(knowledgeCards);
   const [selectedId, setSelectedId] = useState(ids[0] || null);
+  const [overrides, setOverrides] = useState(loadApprovalOverrides);
   const knowledge = selectedId ? knowledgeCards[selectedId] : null;
+
+  function statusOf(id) {
+    if (overrides[id] === "approved" || overrides[id] === "draft") return overrides[id];
+    const k = knowledgeCards[id];
+    return k ? k.status : "draft";
+  }
+
+  function setStatus(id, status) {
+    setOverrides((current) => {
+      const next = { ...current, [id]: status };
+      saveApprovalOverrides(next);
+      return next;
+    });
+  }
+
+  const approvedCount = ids.filter((id) => statusOf(id) === "approved").length;
+  const draftCount = ids.length - approvedCount;
+
+  function approveAll() {
+    const next = { ...overrides };
+    ids.forEach((id) => { next[id] = "approved"; });
+    saveApprovalOverrides(next);
+    setOverrides(next);
+  }
+
+  function exportApprovals() {
+    const list = ids.filter((id) => statusOf(id) === "approved");
+    const blob = new Blob([JSON.stringify({ approved: list }, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "approved-cards.json";
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  const selectedStatus = selectedId ? statusOf(selectedId) : "draft";
 
   return h("div", { className: "review-mode" },
     h("div", { className: "review-head" },
@@ -795,18 +832,18 @@ function ReviewMode({ cards, onBackToLearn }) {
       h("button", { type: "button", className: "soft-btn", onClick: onBackToLearn }, "回到牌卡学习")
     ),
     h("section", { className: "review-stats" },
-      h("div", null, h("strong", null, meta.total), h("span", null, "已录入")),
-      h("div", null, h("strong", null, meta.approved), h("span", null, "已通过")),
-      h("div", null, h("strong", null, meta.draft), h("span", null, "草稿待审"))
+      h("div", null, h("strong", null, ids.length), h("span", null, "已录入")),
+      h("div", null, h("strong", null, approvedCount), h("span", null, "已通过")),
+      h("div", null, h("strong", null, draftCount), h("span", null, "草稿待审"))
     ),
     h("p", { className: "review-explain" },
-      "这里预览知识库草稿。核对来源与内容后，把对应 JSON 文件的 ",
-      h("code", null, "status"),
-      " 改成 ",
-      h("code", null, "\"approved\""),
-      "，重新运行 ",
-      h("code", null, "npm run compile-knowledge"),
-      "，正式学习界面才会显示这份新内容。未通过的牌在学习界面仍用旧数据。"
+      "逐张核对内容与来源，点「",
+      h("strong", null, "通过并上线"),
+      "」即可让这张牌的新内容立刻显示在学习界面（审核状态存在你的浏览器里）。想把审核结果永久写进项目，点右上「导出审核结果」，把文件交给开发即可固化。"
+    ),
+    ids.length > 0 && h("div", { className: "review-bulk" },
+      h("button", { type: "button", className: "soft-btn", onClick: approveAll }, "全部通过"),
+      h("button", { type: "button", className: "soft-btn", onClick: exportApprovals }, "导出审核结果")
     ),
     ids.length === 0
       ? h("p", { className: "review-empty" }, "知识库还没有内容。先在 knowledge/major 或 knowledge/minor 里添加 JSON 文件。")
@@ -814,15 +851,16 @@ function ReviewMode({ cards, onBackToLearn }) {
         h("div", { className: "review-list" },
           ids.map((id) => {
             const k = knowledgeCards[id];
+            const st = statusOf(id);
             return h("button", {
               key: id,
               type: "button",
               className: `review-list-item ${id === selectedId ? "is-active" : ""}`,
               onClick: () => setSelectedId(id)
             },
-              h("span", { className: `review-status-dot status-${k.status}` }),
+              h("span", { className: `review-status-dot status-${st}` }),
               h("strong", null, `${k.number || ""} ${k.name}`),
-              h("small", null, k.status === "approved" ? "已通过" : "草稿")
+              h("small", null, st === "approved" ? "已通过" : "草稿")
             );
           })
         ),
@@ -830,8 +868,13 @@ function ReviewMode({ cards, onBackToLearn }) {
           knowledge && h(React.Fragment, null,
             h("div", { className: "review-detail-head" },
               h("h3", null, `${knowledge.number || ""} ${knowledge.name}`),
-              h("span", { className: `review-badge status-${knowledge.status}` },
-                knowledge.status === "approved" ? "已通过" : "草稿 · 未上线")
+              h("span", { className: `review-badge status-${selectedStatus}` },
+                selectedStatus === "approved" ? "已通过 · 已上线" : "草稿 · 未上线")
+            ),
+            h("div", { className: "review-actions" },
+              selectedStatus === "approved"
+                ? h("button", { type: "button", className: "soft-btn", onClick: () => setStatus(selectedId, "draft") }, "撤销通过")
+                : h("button", { type: "button", className: "primary-btn", onClick: () => setStatus(selectedId, "approved") }, "通过并上线")
             ),
             Array.isArray(knowledge.sources) && knowledge.sources.length > 0 && h("section", { className: "review-sources" },
               h("h4", null, "权威来源"),
@@ -1706,6 +1749,35 @@ const DOMAIN_LABELS = {
   money: "财运"
 };
 
+const APPROVAL_OVERRIDE_KEY = "tarot-knowledge-approvals-v1";
+
+function loadApprovalOverrides() {
+  try {
+    const raw = localStorage.getItem(APPROVAL_OVERRIDE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch (error) {
+    return {};
+  }
+}
+
+function saveApprovalOverrides(overrides) {
+  try {
+    localStorage.setItem(APPROVAL_OVERRIDE_KEY, JSON.stringify(overrides));
+  } catch (error) {
+    // 审核状态即使无法持久化也应能在当前会话使用。
+  }
+}
+
+// 合并编译时的 status 与浏览器里的审核覆盖，得出某张牌的有效 status。
+function getEffectiveStatus(cardId) {
+  const overrides = loadApprovalOverrides();
+  if (overrides[cardId] === "approved" || overrides[cardId] === "draft") {
+    return overrides[cardId];
+  }
+  const entry = getKnowledge(cardId);
+  return entry ? entry.status : "draft";
+}
+
 function getKnowledge(cardId) {
   const all = window.TAROT_KNOWLEDGE_CARDS || {};
   return all[cardId] || null;
@@ -1713,7 +1785,7 @@ function getKnowledge(cardId) {
 
 function getApprovedKnowledge(cardId) {
   const entry = getKnowledge(cardId);
-  return entry && entry.status === "approved" ? entry : null;
+  return entry && getEffectiveStatus(cardId) === "approved" ? entry : null;
 }
 
 function getKnowledgeMeta() {
