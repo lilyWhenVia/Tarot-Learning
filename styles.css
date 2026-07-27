@@ -523,6 +523,20 @@ h2 {
   box-shadow: 0 1.5rem 3rem rgba(51, 39, 27, 0.2);
 }
 
+.card-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 有真实牌面图时，隐藏左上角的装饰性名牌，避免遮挡画面 */
+.card-art:has(.card-photo) .card-label {
+  display: none;
+}
+
 .card-label {
   position: absolute;
   z-index: 3;

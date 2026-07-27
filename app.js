@@ -1515,7 +1515,22 @@ function ImageHotspots({ elements, selectedElementId, setSelectedElementId }) {
   );
 }
 
+function getCardImage(card) {
+  const images = window.TAROT_CARD_IMAGES || {};
+  return images[card.id] || card.localImageUrl || null;
+}
+
 function CardArtwork({ card }) {
+  const imageUrl = getCardImage(card);
+  if (imageUrl) {
+    return h("img", {
+      className: "card-photo",
+      src: imageUrl,
+      alt: `${card.name} ${card.english || ""}`.trim(),
+      loading: "lazy"
+    });
+  }
+
   const known = knownArtwork(card.id);
   if (known) return h(React.Fragment, null, ...known);
 
