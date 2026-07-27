@@ -2324,3 +2324,217 @@ blockquote {
 
   .kp-app-row { grid-template-columns: 1fr; gap: 0.2rem; }
 }
+
+/* ============================================================
+   设计焕新层 (Design Refresh) — 2026-07-27
+   纯追加、不改结构，可整段删除回退。
+   主题:烫金羊皮纸 · 神秘而典雅的塔罗美学
+   ============================================================ */
+
+:root {
+  /* 精炼的设计令牌 */
+  --ink: #2a2118;
+  --ink-soft: #5c4a35;
+  --gold: #a67c2e;
+  --gold-bright: #c69a4c;
+  --gold-deep: #7e5c24;
+  --parchment: #f7f0e1;
+  --parchment-lit: #fdf9f0;
+  --line: rgba(126, 92, 36, 0.22);
+  --line-strong: rgba(126, 92, 36, 0.42);
+  --serif-display: "Cinzel", "Noto Serif SC", "Songti SC", serif;
+  --serif-cn: "Noto Serif SC", "Songti SC", serif;
+  --shadow-sm: 0 2px 8px rgba(51, 39, 27, 0.08);
+  --shadow-md: 0 10px 28px rgba(51, 39, 27, 0.14);
+  --shadow-lg: 0 22px 48px rgba(51, 39, 27, 0.2);
+}
+
+/* —— 页面底纹:更有质感的羊皮纸 + 极淡的星光 —— */
+body {
+  background:
+    radial-gradient(circle at 15% 8%, rgba(198, 154, 76, 0.16), transparent 42%),
+    radial-gradient(circle at 85% 92%, rgba(126, 92, 36, 0.1), transparent 46%),
+    linear-gradient(180deg, #fbf6ec 0%, #efe4cf 100%);
+}
+
+/* —— 标题:典雅衬线 + 烫金 —— */
+h1 {
+  font-family: var(--serif-display);
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+
+h2, h3 {
+  font-family: var(--serif-cn);
+  letter-spacing: 0.01em;
+}
+
+.eyebrow {
+  color: var(--gold-deep);
+  letter-spacing: 0.16em;
+}
+
+/* header 底部一条烫金分隔 */
+.app-header {
+  border-bottom: 1px solid transparent;
+  border-image: linear-gradient(90deg, var(--gold-bright), transparent) 1;
+  height: auto;
+  padding-bottom: 0.8rem;
+}
+
+/* —— 模式切换 & 按钮:金边质感 —— */
+.mode-toggle {
+  border-color: var(--line);
+  background: rgba(253, 249, 240, 0.85);
+  box-shadow: var(--shadow-sm);
+}
+
+.mode-toggle button.is-active,
+.home-btn.is-active-mode {
+  background: linear-gradient(135deg, #34291d, #4a3a26);
+  color: #f6e6c4;
+  box-shadow: 0 2px 8px rgba(42, 33, 24, 0.3);
+}
+
+.home-btn, .back-btn {
+  border-color: var(--line);
+  background: rgba(253, 249, 240, 0.85);
+  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.home-btn:hover, .back-btn:hover {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-sm);
+}
+
+/* —— 面板:柔和描边 + 层次阴影 —— */
+.left-panel, .right-panel {
+  border-color: var(--line);
+  border-radius: 14px;
+  background: rgba(253, 249, 240, 0.9);
+  box-shadow: var(--shadow-md);
+}
+
+/* —— 导航卡 / 牌列表卡:烫金悬浮 —— */
+.nav-card, .card-tile {
+  border-color: var(--line);
+  border-radius: 12px;
+  background: linear-gradient(180deg, #fdf9f0, #f6edd9);
+}
+
+.nav-card:hover, .card-tile:hover {
+  border-color: var(--gold);
+  box-shadow: 0 0.9rem 1.8rem rgba(126, 92, 36, 0.18);
+}
+
+.card-tile.is-active {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold), var(--shadow-sm);
+}
+
+/* —— 进度卡:烫金标题数字 —— */
+.progress-summary-card {
+  border-color: var(--line);
+  border-radius: 12px;
+  background: linear-gradient(180deg, #fdf7e9, #f5ead1);
+  box-shadow: var(--shadow-sm);
+}
+.progress-summary-card strong { color: var(--gold-deep); font-family: var(--serif-cn); }
+
+/* —— 牌面:更深的木框 + 暖光晕 —— */
+.card-art {
+  border: 0.5rem solid #241d15;
+  border-radius: 16px;
+  box-shadow: var(--shadow-lg), inset 0 0 0 1px rgba(198, 154, 76, 0.5);
+}
+.card-photo { transition: transform 320ms ease; }
+.tarot-card:hover .card-photo { transform: scale(1.03); }
+
+/* —— 关键词标签:小金片 —— */
+.keyword-row span {
+  background: linear-gradient(180deg, #fbf1d9, #f2e2bd);
+  border: 1px solid var(--line);
+  color: var(--gold-deep);
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* —— 主按钮:烫金 —— */
+.primary-btn {
+  background: linear-gradient(135deg, #b98a34, #d8ad57);
+  color: #33260f;
+  border: 0;
+  border-radius: 10px;
+  font-weight: 700;
+  box-shadow: 0 3px 10px rgba(126, 92, 36, 0.3);
+  transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
+}
+.primary-btn:hover { transform: translateY(-1px); filter: brightness(1.05); box-shadow: 0 5px 14px rgba(126, 92, 36, 0.36); }
+.soft-btn {
+  border: 1px solid var(--line-strong);
+  background: rgba(253, 249, 240, 0.9);
+  border-radius: 10px;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+.soft-btn:hover { border-color: var(--gold); box-shadow: var(--shadow-sm); }
+
+/* —— 深度知识库面板:典雅化 —— */
+.knowledge-panel {
+  border-color: var(--line);
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(253,249,240,0.95), rgba(246,237,217,0.8));
+  box-shadow: var(--shadow-sm);
+}
+.knowledge-panel h3 {
+  color: var(--gold-deep);
+  border-left: 3px solid var(--gold-bright);
+  padding-left: 0.55rem;
+}
+.kp-oneline {
+  font-family: var(--serif-cn);
+  color: var(--ink);
+}
+
+/* 翻译公式示范:更醒目的卡片 */
+.kp-demo {
+  background: linear-gradient(180deg, rgba(116,167,217,0.09), rgba(116,167,217,0.04));
+  border-color: rgba(116,167,217,0.32);
+  border-radius: 12px;
+}
+
+/* —— 每日一牌面板:烫金卡 —— */
+.daily-panel {
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+}
+.daily-card-token {
+  background: linear-gradient(160deg, #34291d, #4a3a26);
+  color: #f6e6c4;
+  border-radius: 14px;
+}
+.daily-card-token strong { font-family: var(--serif-display); }
+
+/* —— 审核模式:徽章与状态点更精致 —— */
+.review-badge.status-approved { background: linear-gradient(135deg, #7fae4f, #9ac26a); color: #22350f; }
+.review-badge.status-draft { background: linear-gradient(135deg, #d8a24a, #e6bd6f); color: #4a3410; }
+.review-stats > div {
+  border-radius: 12px;
+  background: linear-gradient(180deg, #fdf7e9, #f5ead1);
+  border-color: var(--line);
+}
+.review-stats strong { color: var(--gold-deep); font-family: var(--serif-cn); }
+
+/* —— 图像热点:烫金脉动 —— */
+.image-hotspot {
+  border: 2px solid var(--gold-bright);
+  background: rgba(253, 249, 240, 0.7);
+  box-shadow: 0 0 0 4px rgba(198, 154, 76, 0.18);
+}
+.image-hotspot.active {
+  background: var(--gold-bright);
+  box-shadow: 0 0 0 6px rgba(198, 154, 76, 0.3);
+}
+
+/* 平滑滚动与选中色 */
+html { scroll-behavior: smooth; }
+::selection { background: rgba(198, 154, 76, 0.32); }
