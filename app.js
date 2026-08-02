@@ -1,8 +1,10 @@
-const { useEffect, useMemo, useReducer, useState } = React;
+const { useMemo, useReducer, useState, useEffect } = React;
 
 const PROGRESS_STORAGE_KEY = "tarot-image-study-progress-v1";
 const DAILY_CARD_STORAGE_KEY = "tarot-daily-card-v1";
 const SPREAD_HISTORY_STORAGE_KEY = "tarot-spread-practice-history-v1";
+const QUIZ_SESSION_STORAGE_KEY = "tarot-quiz-session-v1";
+const SPREAD_SESSION_STORAGE_KEY = "tarot-spread-session-v1";
 const STATUS_LABELS = {
   not_started: "未学习",
   learning: "学习中",
@@ -162,7 +164,6 @@ function parentStateFor(state) {
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [selectedElementId, setSelectedElementId] = useState(null);
   const [progress, setProgress] = useState(loadProgressFromLocalStorage);
   const [studyMode, setStudyMode] = useState("learn");
   const [dailyCard] = useState(() => getOrCreateDailyCard(TAROT_CARDS));
@@ -170,14 +171,6 @@ function App() {
   const minorCards = useMemo(() => TAROT_CARDS.filter((card) => !isMajorCard(card)), []);
   const selectedCard = TAROT_CARDS.find((card) => card.id === state.selectedCard) || majorCards[0] || TAROT_CARDS[0];
   const progressSummary = useMemo(() => calculateProgressSummary(TAROT_CARDS, progress), [progress]);
-
-  useEffect(() => {
-    if (selectedCard?.imageElements?.length) {
-      setSelectedElementId(selectedCard.imageElements[0].id);
-    } else {
-      setSelectedElementId(null);
-    }
-  }, [selectedCard?.id]);
 
   function goMajor() {
     dispatch({
@@ -279,8 +272,8 @@ function App() {
 
   return h("main", { className: "shell" },
     h(Header, { state, studyMode, setStudyMode, onHome: () => dispatch({ type: "home" }) }),
-    h("div", { className: "app-layout" },
-      h("aside", { className: "left-panel" },
+    h("div", { className: studyMode === "learn" ? "app-layout" : "app-layout is-full" },
+      studyMode === "learn" && h("aside", { className: "left-panel" },
         h(LeftNavigation, {
           state,
           majorCards,
@@ -299,22 +292,20 @@ function App() {
       h("section", { className: "right-panel" },
         studyMode === "learn"
           ? h("div", { className: "learn-stack" },
-            state.currentView === "home" && h(DailyCardPanel, {
-              card: dailyCard,
-              onOpenDailyCard: openDailyCardStudy
-            }),
-            h(ImageLearningModule, {
-              card: selectedCard,
-              selectedElementId,
-              setSelectedElementId,
-              progressRecord: getCardProgress(selectedCard.id, progress),
-              setCardStatus
-            })
+            state.currentView === "home"
+              ? h(DailyCardPanel, {
+                card: dailyCard,
+                onOpenDailyCard: openDailyCardStudy
+              })
+              : h(ImageLearningModule, {
+                card: selectedCard,
+                progressRecord: getCardProgress(selectedCard.id, progress),
+                setCardStatus
+              })
           )
           : studyMode === "quiz"
             ? h(QuizMode, {
             cards: TAROT_CARDS,
-            onBackToLearn: () => setStudyMode("learn"),
             onAnswerCard: (cardId, isCorrect) => recordQuizAnswer(cardId, isCorrect)
           })
           : studyMode === "translate"
@@ -322,16 +313,10 @@ function App() {
               cards: TAROT_CARDS,
               onStudyCard: openCardStudy,
             })
-            : studyMode === "review"
-              ? h(ReviewMode, {
-                cards: TAROT_CARDS,
-                onBackToLearn: () => setStudyMode("learn")
-              })
-              : h(SpreadPractice, {
-                cards: TAROT_CARDS,
-                onStudyCard: openCardStudy,
-                onBackToLearn: () => setStudyMode("learn")
-              })
+            : h(SpreadPractice, {
+              cards: TAROT_CARDS,
+              onStudyCard: openCardStudy
+            })
       )
     )
   );
@@ -346,40 +331,34 @@ function App() {
   }
 }
 
+const STUDY_MODES = [
+  { id: "learn", label: "牌卡学习", hint: "看图解牌" },
+  { id: "quiz", label: "测验模式", hint: "自测记忆" },
+  { id: "translate", label: "翻译训练", hint: "牌意落地" },
+  { id: "spread", label: "牌阵练习", hint: "实战演练" }
+];
+
 function Header({ state, studyMode, setStudyMode, onHome }) {
   return h("header", { className: "app-header" },
-    h("div", null,
+    h("div", { className: "app-brand" },
       h("p", { className: "eyebrow" }, "Tarot Image Study"),
       h("h1", null, "塔罗图像学习")
     ),
-    h("div", { className: "header-actions" },
-      h("div", { className: "mode-toggle", "aria-label": "学习模式切换" },
-        h("button", {
-          type: "button",
-          className: studyMode === "learn" ? "is-active" : "",
-          onClick: () => setStudyMode("learn")
-        }, "牌卡学习"),
-        h("button", {
-          type: "button",
-          className: studyMode === "quiz" ? "is-active" : "",
-          onClick: () => setStudyMode("quiz")
-        }, "测验模式"),
-        h("button", {
-          type: "button",
-          className: studyMode === "translate" ? "is-active" : "",
-          onClick: () => setStudyMode("translate")
-        }, "翻译训练")
-      ),
-      h("button", {
-        className: studyMode === "spread" ? "home-btn is-active-mode" : "home-btn",
-        onClick: () => setStudyMode("spread")
-      }, "牌阵练习"),
-      h("button", {
-        className: studyMode === "review" ? "home-btn is-active-mode" : "home-btn",
-        onClick: () => setStudyMode("review")
-      }, "知识库审核"),
-      h("button", { className: "home-btn", onClick: onHome }, viewLabel(state))
-    )
+    h("nav", { className: "mode-tabs", "aria-label": "学习模式切换" },
+      STUDY_MODES.map((mode) => h("button", {
+        key: mode.id,
+        type: "button",
+        className: studyMode === mode.id ? "mode-tab is-active" : "mode-tab",
+        "aria-current": studyMode === mode.id ? "page" : undefined,
+        onClick: () => setStudyMode(mode.id)
+      },
+        h("span", { className: "mode-tab-label" }, mode.label),
+        h("span", { className: "mode-tab-hint" }, mode.hint)
+      ))
+    ),
+    studyMode === "learn" && state.currentView !== "home"
+      ? h("button", { className: "home-btn", onClick: onHome }, "回首页")
+      : h("span", { className: "home-btn-spacer", "aria-hidden": "true" })
   );
 }
 
@@ -561,46 +540,50 @@ function CardGrid({ cards, selectedCard, progress, onCard }) {
   );
 }
 
-function ImageLearningModule({ card, selectedElementId, setSelectedElementId, progressRecord, setCardStatus }) {
-  const element = getSelectedElement(card, selectedElementId);
+function ImageLearningModule({ card, progressRecord, setCardStatus }) {
   const knowledge = getApprovedKnowledge(card.id);
+  const dict = knowledge && knowledge.dictionary;
+  const uprightText = (dict && dict.upright && dict.upright.spirit) || card.upright;
+  const reversedText = (dict && dict.reversed && dict.reversed.spirit) || card.reversed;
 
   return h("div", { className: "learning-layout" },
-    h("div", { className: "card-stage" },
-      h(TarotVisual, { card, selectedElementId, setSelectedElementId })
-    ),
-    h("article", { className: "meaning-panel" },
-      h("div", { className: "meaning-head" },
-        h("div", null,
-          h("p", { className: "eyebrow" }, card.english),
-          h("h2", null, `${card.number} ${card.name}`)
-        ),
-        h("span", { className: "suit-pill" }, card.suit)
+    h("div", { className: "learning-top" },
+      h("div", { className: "card-stage" },
+        h(TarotVisual, { card })
       ),
-      h("p", { className: "theme" }, card.coreMeaning || card.theme),
-      h(StudyStatusActions, {
-        card,
-        progressRecord,
-        onSetStatus: setCardStatus
-      }),
-      h("div", { className: "keyword-row" }, card.keywords.map((keyword) => h("span", { key: keyword }, keyword))),
-      knowledge ? h(KnowledgePanel, { knowledge }) : h(StructuredReadingPanelV2, { card }),
-      h(ElementStudyPanel, { card, element }),
-      h("div", { className: "meaning-grid" },
-        h("section", null,
-          h("h3", null, "正位解释"),
-          h("p", null, card.upright)
+      h("article", { className: "meaning-panel" },
+        h("div", { className: "meaning-head" },
+          h("div", null,
+            h("p", { className: "eyebrow" }, card.english),
+            h("h2", null, `${card.number} ${card.name}`)
+          ),
+          h("span", { className: "suit-pill" }, card.suit)
         ),
-        h("section", null,
-          h("h3", null, "逆位解释"),
-          h("p", null, card.reversed)
+        h("p", { className: "theme" }, card.coreMeaning || card.theme),
+        h(StudyStatusActions, {
+          card,
+          progressRecord,
+          onSetStatus: setCardStatus
+        }),
+        h("div", { className: "keyword-row" }, card.keywords.map((keyword) => h("span", { key: keyword }, keyword))),
+        h("div", { className: "meaning-grid" },
+          h("section", null,
+            h("h3", null, "正位解释"),
+            h("p", null, uprightText)
+          ),
+          h("section", null,
+            h("h3", null, "逆位解释"),
+            h("p", null, reversedText)
+          )
+        ),
+        h("section", { className: "memory-line" },
+          h("h3", null, "一句话记忆"),
+          h("p", null, card.deepInsight || card.memory || card.coreMeaning)
         )
-      ),
-      h("section", { className: "memory-line" },
-        h("h3", null, "一句话记忆"),
-        h("p", null, card.deepInsight || card.memory || card.coreMeaning)
       )
-    )
+    ),
+    knowledge ? h(KnowledgePanel, { knowledge }) : h(StructuredReadingPanelV2, { card }),
+    !knowledge && h(ElementStudyPanel, { card, element: getSelectedElement(card, null) })
   );
 }
 
@@ -735,9 +718,9 @@ function ImageGuidePanel({ imageGuide }) {
 
 function KnowledgePanel({ knowledge }) {
   if (!knowledge) return null;
-  const apps = knowledge.applications || {};
   const demos = Array.isArray(knowledge.translationDemos) ? knowledge.translationDemos : [];
   const combos = Array.isArray(knowledge.combos) ? knowledge.combos : [];
+  const elements = Array.isArray(knowledge.imageElements) ? knowledge.imageElements : [];
 
   return h("section", { className: "knowledge-panel" },
     h("p", { className: "eyebrow" }, "深度知识库"),
@@ -746,13 +729,20 @@ function KnowledgePanel({ knowledge }) {
       h("p", { className: "kp-oneline" }, knowledge.coreEnergy.oneLine),
       knowledge.coreEnergy.expanded && h("p", null, knowledge.coreEnergy.expanded)
     ),
-    Object.keys(apps).length > 0 && h("div", { className: "kp-apps" },
-      h("h3", null, "四领域应用"),
-      Object.keys(DOMAIN_LABELS).filter((d) => apps[d]).map((domain) => h("div", { className: "kp-app-row", key: domain },
-        h("strong", { className: "kp-domain" }, DOMAIN_LABELS[domain]),
-        h("div", { className: "kp-app-meanings" },
-          apps[domain].upright && h("p", null, h("span", { className: "kp-tag up" }, "正位"), apps[domain].upright),
-          apps[domain].reversed && h("p", null, h("span", { className: "kp-tag rev" }, "逆位"), apps[domain].reversed)
+    elements.length > 0 && h("div", { className: "kp-elements" },
+      h("h3", null, "画面元素解析"),
+      h("p", { className: "kp-elements-hint" }, "逐一拆解牌面上的人物、姿态、服饰、环境与物件，看每一处细节在占卜里代表什么——图像读到多细，牌意就能读到多深。"),
+      elements.map((element, index) => h("div", { className: "kp-element", key: element.id || index },
+        h("div", { className: "kp-element-head" },
+          element.category && h("span", { className: "kp-element-cat" }, element.category),
+          h("strong", { className: "kp-element-label" }, element.label)
+        ),
+        element.meaning && h("p", { className: "kp-element-meaning" }, element.meaning),
+        element.symbolism && h("p", { className: "kp-element-sym" },
+          h("span", { className: "kp-element-key" }, "占卜象征："), element.symbolism
+        ),
+        element.prompt && h("p", { className: "kp-element-prompt" },
+          h("span", { className: "kp-element-key" }, "自问："), element.prompt
         )
       ))
     ),
@@ -775,115 +765,51 @@ function KnowledgePanel({ knowledge }) {
     knowledge.numerology && h("div", { className: "kp-numerology" },
       h("h3", null, "数字学"),
       h("p", null, knowledge.numerology)
-    )
+    ),
+    knowledge.dictionary && h(DictionaryPanel, { dictionary: knowledge.dictionary })
   );
 }
 
-function ReviewMode({ cards, onBackToLearn }) {
-  const knowledgeCards = window.TAROT_KNOWLEDGE_CARDS || {};
-  const ids = Object.keys(knowledgeCards);
-  const [selectedId, setSelectedId] = useState(ids[0] || null);
-  const [overrides, setOverrides] = useState(loadApprovalOverrides);
-  const knowledge = selectedId ? knowledgeCards[selectedId] : null;
+function DictionaryPanel({ dictionary }) {
+  const hasUpright = dictionary.upright && Object.keys(dictionary.upright).length > 0;
+  const hasReversed = dictionary.reversed && Object.keys(dictionary.reversed).length > 0;
+  const [position, setPosition] = useState(hasUpright ? "upright" : "reversed");
+  if (!hasUpright && !hasReversed) return null;
 
-  function statusOf(id) {
-    if (overrides[id] === "approved" || overrides[id] === "draft") return overrides[id];
-    const k = knowledgeCards[id];
-    return k ? k.status : "draft";
-  }
+  const data = dictionary[position] || {};
 
-  function setStatus(id, status) {
-    setOverrides((current) => {
-      const next = { ...current, [id]: status };
-      saveApprovalOverrides(next);
-      return next;
-    });
-  }
-
-  const approvedCount = ids.filter((id) => statusOf(id) === "approved").length;
-  const draftCount = ids.length - approvedCount;
-
-  function approveAll() {
-    const next = { ...overrides };
-    ids.forEach((id) => { next[id] = "approved"; });
-    saveApprovalOverrides(next);
-    setOverrides(next);
-  }
-
-  function exportApprovals() {
-    const list = ids.filter((id) => statusOf(id) === "approved");
-    const blob = new Blob([JSON.stringify({ approved: list }, null, 2)], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "approved-cards.json";
-    a.click();
-    URL.revokeObjectURL(url);
-  }
-
-  const selectedStatus = selectedId ? statusOf(selectedId) : "draft";
-
-  return h("div", { className: "review-mode" },
-    h("div", { className: "review-head" },
-      h("div", null,
-        h("p", { className: "eyebrow" }, "Knowledge Review"),
-        h("h2", null, "知识库审核")
-      ),
-      h("button", { type: "button", className: "soft-btn", onClick: onBackToLearn }, "回到牌卡学习")
+  return h("div", { className: "kp-dict" },
+    h("h3", null, "场景化解读 · 解牌字典"),
+    h("p", { className: "kp-dict-hint" }, "抽到这张牌后，按你问的场景直接对照——这正是「牌意落到实际问题」的实战查询。"),
+    h("div", { className: "kp-dict-tabs", role: "tablist" },
+      hasUpright && h("button", {
+        type: "button",
+        className: `kp-dict-tab up ${position === "upright" ? "is-active" : ""}`,
+        onClick: () => setPosition("upright")
+      }, "正位"),
+      hasReversed && h("button", {
+        type: "button",
+        className: `kp-dict-tab rev ${position === "reversed" ? "is-active" : ""}`,
+        onClick: () => setPosition("reversed")
+      }, "逆位")
     ),
-    h("section", { className: "review-stats" },
-      h("div", null, h("strong", null, ids.length), h("span", null, "已录入")),
-      h("div", null, h("strong", null, approvedCount), h("span", null, "已通过")),
-      h("div", null, h("strong", null, draftCount), h("span", null, "草稿待审"))
-    ),
-    h("p", { className: "review-explain" },
-      "逐张核对内容与来源，点「",
-      h("strong", null, "通过并上线"),
-      "」即可让这张牌的新内容立刻显示在学习界面（审核状态存在你的浏览器里）。想把审核结果永久写进项目，点右上「导出审核结果」，把文件交给开发即可固化。"
-    ),
-    ids.length > 0 && h("div", { className: "review-bulk" },
-      h("button", { type: "button", className: "soft-btn", onClick: approveAll }, "全部通过"),
-      h("button", { type: "button", className: "soft-btn", onClick: exportApprovals }, "导出审核结果")
-    ),
-    ids.length === 0
-      ? h("p", { className: "review-empty" }, "知识库还没有内容。先在 knowledge/major 或 knowledge/minor 里添加 JSON 文件。")
-      : h("div", { className: "review-layout" },
-        h("div", { className: "review-list" },
-          ids.map((id) => {
-            const k = knowledgeCards[id];
-            const st = statusOf(id);
-            return h("button", {
-              key: id,
-              type: "button",
-              className: `review-list-item ${id === selectedId ? "is-active" : ""}`,
-              onClick: () => setSelectedId(id)
-            },
-              h("span", { className: `review-status-dot status-${st}` }),
-              h("strong", null, `${k.number || ""} ${k.name}`),
-              h("small", null, st === "approved" ? "已通过" : "草稿")
-            );
-          })
-        ),
-        h("div", { className: "review-detail" },
-          knowledge && h(React.Fragment, null,
-            h("div", { className: "review-detail-head" },
-              h("h3", null, `${knowledge.number || ""} ${knowledge.name}`),
-              h("span", { className: `review-badge status-${selectedStatus}` },
-                selectedStatus === "approved" ? "已通过 · 已上线" : "草稿 · 未上线")
-            ),
-            h("div", { className: "review-actions" },
-              selectedStatus === "approved"
-                ? h("button", { type: "button", className: "soft-btn", onClick: () => setStatus(selectedId, "draft") }, "撤销通过")
-                : h("button", { type: "button", className: "primary-btn", onClick: () => setStatus(selectedId, "approved") }, "通过并上线")
-            ),
-            Array.isArray(knowledge.sources) && knowledge.sources.length > 0 && h("section", { className: "review-sources" },
-              h("h4", null, "权威来源"),
-              h("ul", null, knowledge.sources.map((src, i) => h("li", { key: i }, src)))
-            ),
-            h(KnowledgePanel, { knowledge })
+    h("div", { className: "kp-dict-sections" },
+      DICT_SECTIONS.map((section) => {
+        const sectionData = data[section.key];
+        if (!sectionData || typeof sectionData !== "object") return null;
+        const rows = section.fields.filter(([field]) => sectionData[field]);
+        if (!rows.length) return null;
+        return h("details", { className: "kp-dict-section", key: section.key },
+          h("summary", null, `《${section.label}》`),
+          h("div", { className: "kp-dict-body" },
+            rows.map(([field, label]) => h("p", { className: "kp-dict-row", key: field },
+              h("span", { className: "kp-dict-row-label" }, label),
+              h("span", { className: "kp-dict-row-text" }, sectionData[field])
+            ))
           )
-        )
-      )
+        );
+      })
+    )
   );
 }
 
@@ -941,11 +867,16 @@ function StudyStatusActions({ card, progressRecord, onSetStatus }) {
   );
 }
 
-function SpreadPractice({ cards, onStudyCard, onBackToLearn }) {
-  const [selectedSpreadType, setSelectedSpreadType] = useState(SPREAD_TYPES[0].id);
-  const [drawnCards, setDrawnCards] = useState([]);
+function SpreadPractice({ cards, onStudyCard }) {
+  const saved = loadSpreadSession();
+  const [selectedSpreadType, setSelectedSpreadType] = useState(() => (saved && saved.selectedSpreadType) || SPREAD_TYPES[0].id);
+  const [drawnCards, setDrawnCards] = useState(() => (saved && Array.isArray(saved.drawnCards)) ? saved.drawnCards : []);
   const [error, setError] = useState("");
   const spread = SPREAD_TYPES.find((item) => item.id === selectedSpreadType) || SPREAD_TYPES[0];
+
+  useEffect(() => {
+    saveSpreadSession({ selectedSpreadType, drawnCards });
+  }, [selectedSpreadType, drawnCards]);
 
   function handleSpreadTypeChange(spreadTypeId) {
     setSelectedSpreadType(spreadTypeId);
@@ -976,7 +907,6 @@ function SpreadPractice({ cards, onStudyCard, onBackToLearn }) {
         h("p", { className: "eyebrow" }, "Spread Practice"),
         h("h2", null, "牌阵练习")
       ),
-      h("button", { type: "button", className: "soft-btn", onClick: onBackToLearn }, "回到牌卡学习")
     ),
     h(SpreadTypeSelector, {
       spreadTypes: SPREAD_TYPES,
@@ -1133,14 +1063,59 @@ function saveSpreadPracticeHistory(record) {
   }
 }
 
-function QuizMode({ cards, onBackToLearn, onAnswerCard }) {
-  const [quizQuestions, setQuizQuestions] = useState(() => generateQuizQuestions(cards));
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [isAnswered, setIsAnswered] = useState(false);
-  const [quizResult, setQuizResult] = useState({ correct: 0, wrong: 0 });
+function loadQuizSession() {
+  try {
+    const raw = localStorage.getItem(QUIZ_SESSION_STORAGE_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    if (!data || !Array.isArray(data.quizQuestions)) return null;
+    return data;
+  } catch (error) {
+    return null;
+  }
+}
+
+function saveQuizSession(session) {
+  try {
+    localStorage.setItem(QUIZ_SESSION_STORAGE_KEY, JSON.stringify(session));
+  } catch (error) {
+    // Quiz remains usable even when session storage is unavailable.
+  }
+}
+
+function loadSpreadSession() {
+  try {
+    const raw = localStorage.getItem(SPREAD_SESSION_STORAGE_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    if (!data || typeof data !== "object") return null;
+    return data;
+  } catch (error) {
+    return null;
+  }
+}
+
+function saveSpreadSession(session) {
+  try {
+    localStorage.setItem(SPREAD_SESSION_STORAGE_KEY, JSON.stringify(session));
+  } catch (error) {
+    // Spread practice remains usable even when session storage is unavailable.
+  }
+}
+
+function QuizMode({ cards, onAnswerCard }) {
+  const saved = loadQuizSession();
+  const [quizQuestions, setQuizQuestions] = useState(() => (saved && saved.quizQuestions) || generateQuizQuestions(cards));
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(saved ? saved.currentQuestionIndex : 0);
+  const [selectedAnswer, setSelectedAnswer] = useState(saved ? saved.selectedAnswer : null);
+  const [isAnswered, setIsAnswered] = useState(saved ? saved.isAnswered : false);
+  const [quizResult, setQuizResult] = useState(saved ? saved.quizResult : { correct: 0, wrong: 0 });
   const currentQuestion = quizQuestions[currentQuestionIndex];
   const isFinished = currentQuestionIndex >= quizQuestions.length;
+
+  useEffect(() => {
+    saveQuizSession({ quizQuestions, currentQuestionIndex, selectedAnswer, isAnswered, quizResult });
+  }, [quizQuestions, currentQuestionIndex, selectedAnswer, isAnswered, quizResult]);
 
   function restartQuiz() {
     setQuizQuestions(generateQuizQuestions(cards));
@@ -1174,8 +1149,7 @@ function QuizMode({ cards, onBackToLearn, onAnswerCard }) {
       h("section", { className: "quiz-card quiz-empty" },
         h("p", { className: "eyebrow" }, "Quiz Mode"),
         h("h2", null, "暂时还没有足够的数据生成测验"),
-        h("p", null, "可以先继续补充牌卡关键词或图像元素，之后这里会自动生成题目。"),
-        h("button", { type: "button", onClick: onBackToLearn }, "回到牌卡学习")
+        h("p", null, "可以先继续补充牌卡关键词或图像元素，之后这里会自动生成题目。")
       )
     );
   }
@@ -1184,8 +1158,7 @@ function QuizMode({ cards, onBackToLearn, onAnswerCard }) {
     return h(QuizResult, {
       result: quizResult,
       total: quizQuestions.length,
-      onRestart: restartQuiz,
-      onBackToLearn
+      onRestart: restartQuiz
     });
   }
 
@@ -1194,8 +1167,7 @@ function QuizMode({ cards, onBackToLearn, onAnswerCard }) {
       h("div", null,
         h("p", { className: "eyebrow" }, "Quiz Mode"),
         h("h2", null, "测验模式")
-      ),
-      h("button", { type: "button", className: "soft-btn", onClick: onBackToLearn }, "回到牌卡学习")
+      )
     ),
     h(QuizQuestion, {
       question: currentQuestion,
@@ -1274,7 +1246,7 @@ function QuizFeedback({ question, selectedAnswer }) {
   );
 }
 
-function QuizResult({ result, total, onRestart, onBackToLearn }) {
+function QuizResult({ result, total, onRestart }) {
   const accuracy = total ? Math.round((result.correct / total) * 100) : 0;
 
   return h("div", { className: "quiz-mode" },
@@ -1287,8 +1259,7 @@ function QuizResult({ result, total, onRestart, onBackToLearn }) {
         h("div", null, h("strong", null, `${accuracy}%`), h("span", null, "正确率"))
       ),
       h("div", { className: "quiz-actions" },
-        h("button", { type: "button", className: "primary-btn", onClick: onRestart }, "再来一组"),
-        h("button", { type: "button", className: "soft-btn", onClick: onBackToLearn }, "回到牌卡学习")
+        h("button", { type: "button", className: "primary-btn", onClick: onRestart }, "再来一组")
       )
     )
   );
@@ -1521,7 +1492,7 @@ function ElementStudyPanel({ card, element }) {
   );
 }
 
-function TarotVisual({ card, selectedElementId, setSelectedElementId }) {
+function TarotVisual({ card }) {
   const [accent, secondary, base] = card.palette;
   return h("div", {
     className: `tarot-card card-image-wrapper card-art card-art-${card.id}`,
@@ -1530,31 +1501,13 @@ function TarotVisual({ card, selectedElementId, setSelectedElementId }) {
       "--secondary": secondary,
       "--base": base
     },
-    "aria-label": "可点击塔罗牌面"
+    "aria-label": "塔罗牌面"
   },
     h("div", { className: "card-label" },
       h("span", null, card.number),
       h("strong", null, card.name)
     ),
-    h(CardArtwork, { card }),
-    h(ImageHotspots, {
-      elements: card.imageElements || [],
-      selectedElementId,
-      setSelectedElementId
-    })
-  );
-}
-
-function ImageHotspots({ elements, selectedElementId, setSelectedElementId }) {
-  return h(React.Fragment, null,
-    elements.map((element) => h("button", {
-      key: element.id,
-      type: "button",
-      className: `image-hotspot ${selectedElementId === element.id ? "active" : ""}`,
-      style: { left: `${element.x}%`, top: `${element.y}%` },
-      onClick: () => setSelectedElementId(element.id),
-      "aria-label": element.title || element.label
-    }, h("span", null, element.label)))
+    h(CardArtwork, { card })
   );
 }
 
@@ -1742,12 +1695,61 @@ function calculateProgressSummary(cards, progress) {
   };
 }
 
-const DOMAIN_LABELS = {
-  career: "事业",
-  love: "感情",
-  self: "自我",
-  money: "财运"
-};
+// 《塔罗解牌字典》场景 → 中文标题 + 各子项标题（顺序即书本呈现顺序）
+const DICT_SECTIONS = [
+  { key: "person", label: "人物", fields: [
+    ["personality", "当事人的个性"],
+    ["workview", "当事人的工作观"],
+    ["loveview", "当事人的感情观"],
+    ["moneyview", "当事人的金钱观"],
+    ["howtodeal", "与当事人的应对方法"],
+    ["represents", "人物代表"]
+  ]},
+  { key: "work", label: "工作", fields: [
+    ["situation", "工作本身的状况"],
+    ["solution", "如何解决工作的困境"],
+    ["relationships", "工作中的人际关系"],
+    ["withBoss", "与上司相处的方法"],
+    ["development", "工作的发展性"],
+    ["jobChange", "找工作／换工作的状况"]
+  ]},
+  { key: "love", label: "爱情", fields: [
+    ["situation", "感情本身的状况"],
+    ["newRomance", "新恋情的可能性"],
+    ["view", "对这段感情的看法"],
+    ["attraction", "性的吸引力"],
+    ["resolveConflict", "如何化解争吵"],
+    ["breakup", "分手的方法"],
+    ["reunion", "复合的可能性"]
+  ]},
+  { key: "friendship", label: "友情", fields: [
+    ["situation", "我的人际关系状况"],
+    ["resolveMisunderstanding", "如何化解与朋友的误会"]
+  ]},
+  { key: "family", label: "亲情", fields: [
+    ["situation", "家庭的状况"],
+    ["elders", "与长辈的关系"],
+    ["peers", "与平辈的关系"],
+    ["juniors", "与晚辈的关系"]
+  ]},
+  { key: "study", label: "学业", fields: [
+    ["situation", "学业本身的状况"],
+    ["method", "学习的方法"],
+    ["withTeacher", "与老师相处的关系"],
+    ["withClassmates", "与同学相处的关系"]
+  ]},
+  { key: "finance", label: "财务", fields: [
+    ["situation", "目前的财务状况"],
+    ["investment", "投资的状况"],
+    ["purchasing", "采购的策略"]
+  ]},
+  { key: "extended", label: "延伸应用", fields: [
+    ["time", "时间"],
+    ["place", "地点"],
+    ["objects", "物品"],
+    ["body", "身体部位"]
+  ]}
+];
 
 const APPROVAL_OVERRIDE_KEY = "tarot-knowledge-approvals-v1";
 

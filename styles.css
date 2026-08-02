@@ -30,13 +30,20 @@ button {
 }
 
 .app-header {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
   gap: 1rem;
-  height: 4.2rem;
-  padding: 0.35rem 0 0.65rem;
+  padding: 0.5rem 0 0.7rem;
   border-bottom: 1px solid rgba(68, 49, 29, 0.14);
+}
+
+.app-brand {
+  justify-self: start;
+}
+
+.app-header .home-btn {
+  justify-self: end;
 }
 
 .eyebrow {
@@ -65,34 +72,61 @@ h2 {
   font-size: 1.15rem;
 }
 
-.header-actions {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.55rem;
-}
-
-.mode-toggle {
+.mode-tabs {
+  justify-self: center;
   display: inline-flex;
-  gap: 0.15rem;
-  border: 1px solid rgba(68, 49, 29, 0.14);
+  gap: 0.3rem;
+  padding: 0.3rem;
+  border: 1px solid rgba(126, 92, 54, 0.24);
   border-radius: 999px;
-  background: rgba(255, 250, 241, 0.72);
-  padding: 0.18rem;
+  background: rgba(255, 250, 241, 0.85);
+  box-shadow: inset 0 1px 2px rgba(68, 49, 29, 0.06), 0 2px 8px rgba(68, 49, 29, 0.08);
 }
 
-.mode-toggle button {
+.mode-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.05rem;
+  min-width: 5.4rem;
+  padding: 0.42rem 1rem;
   border: 0;
   border-radius: 999px;
   background: transparent;
   color: #6a553d;
-  padding: 0.36rem 0.68rem;
-  font-size: 0.82rem;
+  cursor: pointer;
+  transition: background 180ms ease, color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
 }
 
-.mode-toggle button.is-active {
-  background: #2d2620;
-  color: #fffaf1;
+.mode-tab-label {
+  font-family: "Noto Serif SC", serif;
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.mode-tab-hint {
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  opacity: 0.62;
+}
+
+.mode-tab:hover {
+  background: rgba(198, 154, 76, 0.14);
+  color: #4a3721;
+}
+
+.mode-tab.is-active {
+  background: linear-gradient(135deg, #3a3128, #2d2620);
+  color: #fdf3df;
+  box-shadow: 0 4px 12px rgba(45, 38, 32, 0.32);
+  transform: translateY(-1px);
+}
+
+.mode-tab.is-active .mode-tab-hint {
+  opacity: 0.78;
+  color: var(--gold, #d9b46a);
 }
 
 .home-btn,
@@ -105,17 +139,21 @@ h2 {
   font-size: 0.9rem;
 }
 
-.home-btn.is-active-mode {
-  background: #2d2620;
-  color: #fffaf1;
-}
-
 .app-layout {
   display: grid;
   grid-template-columns: 1fr 3fr;
   gap: 0.75rem;
   align-items: start;
   margin-top: 0.6rem;
+}
+
+.app-layout.is-full {
+  grid-template-columns: 1fr;
+}
+
+.app-layout.is-full > .right-panel {
+  width: min(100%, 68rem);
+  margin: 0 auto;
 }
 
 .left-panel,
@@ -491,6 +529,12 @@ h2 {
 }
 
 .learning-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.learning-top {
   display: grid;
   grid-template-columns: minmax(11rem, 16rem) 1fr;
   gap: 0.75rem;
@@ -500,6 +544,8 @@ h2 {
 .card-stage {
   display: grid;
   place-items: center;
+  position: sticky;
+  top: 0.5rem;
 }
 
 .tarot-card {
@@ -558,39 +604,6 @@ h2 {
   font-weight: 800;
 }
 
-.image-hotspot {
-  position: absolute;
-  z-index: 10;
-  transform: translate(-50%, -50%);
-  border: 0;
-  border-radius: 999px;
-  background: rgba(255, 250, 241, 0.84);
-  color: #4e3522;
-  padding: 0.24rem 0.42rem;
-  font-size: 0.68rem;
-  font-weight: 800;
-  box-shadow: 0 0 0 3px rgba(183, 70, 54, 0.18), 0 0.35rem 0.8rem rgba(51, 39, 27, 0.16);
-  transition: transform 150ms ease, background 150ms ease, color 150ms ease, box-shadow 150ms ease;
-}
-
-.image-hotspot:hover {
-  transform: translate(-50%, -50%) scale(1.08);
-  box-shadow: 0 0 0 4px rgba(183, 70, 54, 0.24), 0 0.55rem 1rem rgba(51, 39, 27, 0.18);
-}
-
-.image-hotspot.active {
-  background: #2d2620;
-  color: #fffaf1;
-  box-shadow: 0 0 0 4px rgba(183, 70, 54, 0.32), 0 0.65rem 1.15rem rgba(51, 39, 27, 0.22);
-}
-
-.image-hotspot span {
-  display: block;
-  max-width: 4rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
 
 .meaning-panel {
   min-width: 0;
@@ -1600,22 +1613,69 @@ blockquote {
   line-height: 1.65;
 }
 
-.kp-app-row {
-  display: grid;
-  grid-template-columns: 3.2rem 1fr;
-  gap: 0.6rem;
-  padding: 0.55rem 0;
-  border-top: 1px dashed rgba(126, 92, 54, 0.2);
+.kp-elements-hint {
+  color: #7a6a52;
+  font-size: 0.86rem;
+  margin-bottom: 0.7rem;
+  line-height: 1.6;
 }
 
-.kp-domain {
+.kp-element {
+  margin-bottom: 0.7rem;
+  padding: 0.72rem 0.85rem;
+  border-radius: 12px;
+  background: rgba(198, 154, 76, 0.08);
+  border: 1px solid rgba(126, 92, 54, 0.22);
+}
+
+.kp-element-head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.kp-element-cat {
+  flex: none;
+  padding: 0.08rem 0.45rem;
+  border-radius: 999px;
+  background: rgba(126, 92, 54, 0.16);
   color: #7e5c36;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.kp-element-label {
+  color: #3a2c1a;
+  font-size: 1rem;
+}
+
+.kp-element-meaning {
+  margin: 0 0 0.45rem;
+  line-height: 1.65;
+}
+
+.kp-element-sym,
+.kp-element-prompt {
+  margin: 0.35rem 0 0;
+  line-height: 1.6;
   font-size: 0.92rem;
 }
 
-.kp-app-meanings p {
-  margin: 0 0 0.4rem;
-  line-height: 1.6;
+.kp-element-sym {
+  color: #4a3a24;
+}
+
+.kp-element-prompt {
+  color: #6c4a24;
+  font-style: italic;
+}
+
+.kp-element-key {
+  font-weight: 700;
+  color: #7e5c36;
+  font-style: normal;
 }
 
 .kp-tag {
@@ -1672,6 +1732,126 @@ blockquote {
 .kp-numerology p {
   line-height: 1.65;
   margin-bottom: 0.5rem;
+}
+
+/* ===== 场景化解读 · 解牌字典 ===== */
+.kp-dict-hint {
+  color: #7a6a52;
+  font-size: 0.86rem;
+  margin-bottom: 0.7rem;
+  line-height: 1.6;
+}
+
+.kp-dict-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.kp-dict-tab {
+  flex: 1;
+  padding: 0.4rem 0.6rem;
+  border-radius: 10px;
+  border: 1px solid rgba(126, 92, 54, 0.28);
+  background: rgba(253, 249, 240, 0.7);
+  color: #6c4a24;
+  font-size: 0.92rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease, box-shadow 150ms ease;
+}
+
+.kp-dict-tab.up.is-active {
+  background: rgba(126, 160, 90, 0.24);
+  color: #4d6a2c;
+  box-shadow: inset 0 0 0 1px rgba(126, 160, 90, 0.5);
+}
+
+.kp-dict-tab.rev.is-active {
+  background: rgba(196, 106, 62, 0.22);
+  color: #a1522b;
+  box-shadow: inset 0 0 0 1px rgba(196, 106, 62, 0.5);
+}
+
+.kp-dict-spirit {
+  margin-bottom: 0.7rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 10px;
+  background: rgba(198, 154, 76, 0.1);
+  border-left: 3px solid var(--gold, #a67c2e);
+  line-height: 1.65;
+}
+
+.kp-dict-spirit-key {
+  font-weight: 700;
+  color: #7e5c36;
+}
+
+.kp-dict-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  gap: 0.55rem;
+  align-items: start;
+}
+
+.kp-dict-section {
+  margin-bottom: 0;
+  border: 1px solid rgba(126, 92, 54, 0.22);
+  border-radius: 10px;
+  background: rgba(255, 252, 244, 0.6);
+  overflow: hidden;
+}
+
+.kp-dict-section > summary {
+  padding: 0.6rem 0.85rem;
+  cursor: pointer;
+  font-weight: 700;
+  color: #6c4a24;
+  font-size: 0.98rem;
+  list-style: none;
+  user-select: none;
+  transition: background 150ms ease;
+}
+
+.kp-dict-section > summary::-webkit-details-marker {
+  display: none;
+}
+
+.kp-dict-section > summary::before {
+  content: "▸";
+  display: inline-block;
+  margin-right: 0.45rem;
+  color: var(--gold, #a67c2e);
+  transition: transform 150ms ease;
+}
+
+.kp-dict-section[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.kp-dict-section > summary:hover {
+  background: rgba(198, 154, 76, 0.1);
+}
+
+.kp-dict-body {
+  padding: 0.2rem 0.85rem 0.7rem;
+}
+
+.kp-dict-row {
+  margin: 0.5rem 0 0;
+  line-height: 1.6;
+}
+
+.kp-dict-row-label {
+  display: block;
+  font-weight: 700;
+  color: #7e5c36;
+  font-size: 0.9rem;
+  margin-bottom: 0.15rem;
+}
+
+.kp-dict-row-text {
+  color: #3a2c1a;
 }
 
 /* ===== 知识库审核模式 ===== */
@@ -1868,7 +2048,7 @@ blockquote {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .learning-layout {
+  .learning-top {
     grid-template-columns: minmax(9.5rem, 13rem) 1fr;
   }
 
@@ -2259,10 +2439,15 @@ blockquote {
   }
 
   .app-layout,
-  .learning-layout {
+  .learning-layout,
+  .learning-top {
     grid-template-columns: 1fr;
     height: auto;
     overflow: visible;
+  }
+
+  .card-stage {
+    position: static;
   }
 
   .left-panel,
@@ -2272,22 +2457,38 @@ blockquote {
     overflow: visible;
   }
 
-  .app-header,
+  .app-header {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+    gap: 0.6rem;
+  }
+
+  .app-brand,
+  .app-header .home-btn {
+    justify-self: center;
+  }
+
   .panel-title,
   .meaning-head {
     align-items: stretch;
     flex-direction: column;
   }
 
-  .header-actions,
   .quiz-head {
     align-items: stretch;
     flex-direction: column;
   }
 
-  .mode-toggle,
-  .mode-toggle button {
+  .mode-tabs {
     width: 100%;
+    justify-content: space-between;
+  }
+
+  .mode-tab {
+    flex: 1;
+    min-width: 0;
+    padding: 0.42rem 0.4rem;
   }
 
   .card-grid,
@@ -2322,7 +2523,6 @@ blockquote {
     max-height: none;
   }
 
-  .kp-app-row { grid-template-columns: 1fr; gap: 0.2rem; }
 }
 
 /* ============================================================
@@ -2383,17 +2583,9 @@ h2, h3 {
 }
 
 /* —— 模式切换 & 按钮:金边质感 —— */
-.mode-toggle {
-  border-color: var(--line);
-  background: rgba(253, 249, 240, 0.85);
-  box-shadow: var(--shadow-sm);
-}
-
-.mode-toggle button.is-active,
-.home-btn.is-active-mode {
+.mode-tab.is-active {
   background: linear-gradient(135deg, #34291d, #4a3a26);
   color: #f6e6c4;
-  box-shadow: 0 2px 8px rgba(42, 33, 24, 0.3);
 }
 
 .home-btn, .back-btn {
@@ -2523,17 +2715,6 @@ h2, h3 {
   border-color: var(--line);
 }
 .review-stats strong { color: var(--gold-deep); font-family: var(--serif-cn); }
-
-/* —— 图像热点:烫金脉动 —— */
-.image-hotspot {
-  border: 2px solid var(--gold-bright);
-  background: rgba(253, 249, 240, 0.7);
-  box-shadow: 0 0 0 4px rgba(198, 154, 76, 0.18);
-}
-.image-hotspot.active {
-  background: var(--gold-bright);
-  box-shadow: 0 0 0 6px rgba(198, 154, 76, 0.3);
-}
 
 /* 平滑滚动与选中色 */
 html { scroll-behavior: smooth; }
